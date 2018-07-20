@@ -1,0 +1,1 @@
+include ':app', ':article', ':bindadapter', ':bind-annotation', ':bind-compiler'
