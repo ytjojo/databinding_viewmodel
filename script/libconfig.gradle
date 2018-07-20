@@ -1,0 +1,86 @@
+apply plugin: 'com.android.library'
+if(rootProject.file('gradle-mvn-push.gradle').exists()){
+    apply from: rootProject.file('gradle-mvn-push.gradle')
+}
+android {
+    resourcePrefix project.getName()
+    compileSdkVersion 25
+    buildToolsVersion "27.0.3"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+        }
+        debug{
+
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+    sourceSets{
+        main{
+            jniLibs.srcDir(['libs'])
+        }
+        def dir = project.getProjectDir();
+
+        dir.listFiles().each {
+            if(it.isDirectory() && it.name.startsWith('wmd_')){
+                println "${it.name}/src/main/java"
+                java.srcDirs += "${it.name}/src/main/java"
+                res.srcDirs += "${it.name}/src/main/res"
+            }
+        }
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+}
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+    options.addStringOption('charSet', 'UTF-8')
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+afterEvaluate{
+    tasks.getByName('androidJavadocs').enabled = false
+}

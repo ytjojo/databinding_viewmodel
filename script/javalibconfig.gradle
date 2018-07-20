@@ -1,0 +1,102 @@
+apply plugin: 'java'
+
+//apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlin-android-extensions'
+
+boolean groovyEnable = false
+if(project.hasProperty("GROOVY_ENABLE")&& project.properties.get("GROOVY_ENABLE")){
+    groovyEnable = true
+}
+
+if(groovyEnable){
+    apply plugin: 'groovy'
+}
+if(!Boolean.parseBoolean(MAVEN_RELEASE_REMOTE)){
+    apply plugin: 'maven'
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                version = VERSION_NAME
+                group = GROUP
+
+                pom.groupId = GROUP
+                pom.artifactId = POM_ARTIFACT_ID
+                pom.version = VERSION_NAME
+                repository(url: uri('../maven'))
+            }
+        }
+    }
+
+}else {
+    apply from: rootProject.file('gradle-mvn-push.gradle')
+}
+
+
+buildscript {
+    // to make IJ happy
+    //1.2.10
+    ext.kotlin_version =  '1.2.51'
+//    ext.kotlin_version =  '1.0.0'
+    dependencies {
+        classpath 'commons-io:commons-io:2.4'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+    repositories {
+
+        maven{
+            url file('./maven')
+        }
+        jcenter()
+
+    }
+}
+apply plugin: "kotlin"
+
+repositories {
+    mavenCentral()
+    // or better:
+    jcenter()
+}
+
+dependencies {
+//    compile gradleApi()
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    if(groovyEnable){
+        compile localGroovy()
+    }
+    compile 'org.ow2.asm:asm-all:5.0.4'
+    compile 'org.javassist:javassist:3.21.0-GA'
+    compile 'com.squareup:javapoet:1.9.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+sourceSets {
+    main {
+        if(groovyEnable){
+            groovy {
+                srcDir 'src/main/groovy'
+            }
+        }
+
+//        java {
+//            srcDir 'src/main/java'
+//        }
+
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+}
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+[compileJava, compileGroovy, javadoc]*.options*.encoding = 'UTF-8'
