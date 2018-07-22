@@ -1,1 +1,1 @@
-include ':app', ':article', ':bindadapter', ':bind-annotation', ':bind-compiler'
+include ':app', ':article', ':bindadapter', ':bind-annotation', ':bind-compiler', ':bind-plugin'

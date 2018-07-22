@@ -1,0 +1,9 @@
+apply from: rootProject.file('./script/javalibconfig.gradle')
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile gradleApi()
+    compile 'com.android.tools.build:gradle:3.1.3'
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
