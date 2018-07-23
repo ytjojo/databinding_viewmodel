@@ -20,16 +20,8 @@ import android.databinding.tool.processing.ScopedException;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.PackageElement;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.util.Elements;
-import javax.tools.Diagnostic;
 import javax.tools.Diagnostic.Kind;
 
 public class L {

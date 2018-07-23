@@ -41,14 +41,14 @@ import javax.lang.model.element.TypeElement;
 import javax.xml.bind.JAXBException;
 
 @SupportedAnnotationTypes({
-        "android.databinding.BindingAdapter",
-        "android.databinding.InverseBindingMethods",
-        "android.databinding.InverseBindingAdapter",
-        "android.databinding.InverseMethod",
-        "android.databinding.Untaggable",
-        "android.databinding.BindingMethods",
-        "android.databinding.BindingConversion",
-        "android.databinding.BindingBuildInfo"}
+        "BindingAdapter",
+        "InverseBindingMethods",
+        "InverseBindingAdapter",
+        "InverseMethod",
+        "Untaggable",
+        "BindingMethods",
+        "BindingConversion",
+        "BindingBuildInfo"}
 )
 /**
  * Parent annotation processor that dispatches sub steps to ensure execution order.

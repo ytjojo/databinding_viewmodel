@@ -14,6 +14,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BindingViewModel {
     int layoutId();
-    Class<?> bindModelClass();
-    String gegerateClassName();
+    Class<?> bindModelClass() default BindingViewModel.class;
+    String gegerateClassName() default "";
 }

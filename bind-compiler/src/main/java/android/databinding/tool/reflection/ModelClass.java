@@ -22,7 +22,6 @@ import android.databinding.tool.util.L;
 import android.databinding.tool.util.StringUtils;
 
 import com.google.common.collect.ImmutableMap;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 
 import org.jetbrains.annotations.NotNull;

@@ -20,7 +20,6 @@ import org.apache.commons.io.FileUtils;
 
 import android.databinding.tool.reflection.ModelAnalyzer;
 import android.databinding.tool.reflection.ModelClass;
-import android.databinding.tool.reflection.SdkUtil;
 import android.databinding.tool.reflection.TypeUtil;
 import android.databinding.tool.util.L;
 

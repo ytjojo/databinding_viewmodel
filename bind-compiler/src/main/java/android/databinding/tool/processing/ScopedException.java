@@ -27,8 +27,6 @@ import android.databinding.tool.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * An exception that contains scope information.

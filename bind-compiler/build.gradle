@@ -16,6 +16,8 @@ dependencies {
     compile 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
     compile 'com.google.guava:guava:17.0'
     compile 'com.google.code.gson:gson:2.8.5'
+//    compile "android.arch.lifecycle:compiler:1.1.1"
+//    compile "android.arch.persistence.room:compiler:1.0.0"
 //    compile 'com.android.tools:annotations:24.5.0'
 
 }

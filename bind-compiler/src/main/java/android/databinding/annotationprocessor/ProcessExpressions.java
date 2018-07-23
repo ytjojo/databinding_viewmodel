@@ -21,7 +21,6 @@ import android.databinding.tool.DataBindingCompilerArgs;
 import android.databinding.tool.LayoutXmlProcessor;
 import android.databinding.tool.processing.Scope;
 import android.databinding.tool.processing.ScopedException;
-import android.databinding.tool.reflection.SdkUtil;
 import android.databinding.tool.store.GenClassInfoLog;
 import android.databinding.tool.store.ResourceBundle;
 import android.databinding.tool.util.GenerationalClassUtil;

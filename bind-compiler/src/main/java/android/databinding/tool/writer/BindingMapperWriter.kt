@@ -57,7 +57,7 @@ class BindingMapperWriter(var pkg : String, var className: String,
             }
             nl("")
             nl("@Override")
-            block("public android.databinding.ViewDataBinding getDataBinder(android.databinding.DataBindingComponent bindingComponent, android.view.View view, int layoutId)") {
+            block("public android.databinding.ViewDataBinding getDataBinder(DataBindingComponent bindingComponent, android.view.View view, int layoutId)") {
                 block("switch(layoutId)") {
                     layoutBinders.groupBy{it.layoutname }.forEach {
                         val firstVal = it.value[0]

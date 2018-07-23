@@ -49,7 +49,7 @@ public class DataBindingBuilder {
     Versions mVersions;
     private static final String EXCLUDE_PATTERN = "android/databinding/layouts/*.*";
     public static final String PROCESSOR_NAME =
-            "android.databinding.annotationprocessor.ProcessDataBinding";
+            "ProcessDataBinding";
 
     public static final String ARTIFACT_FILES_DIR_FROM_LIBS = "dependent-lib-artifacts";
     public static final String ARTIFACT_BASE_CLASSES_DIR_FROM_LIBS = "dependent-lib-base-classes";

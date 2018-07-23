@@ -20,12 +20,10 @@ import android.databinding.tool.processing.scopes.FileScopeProvider;
 import android.databinding.tool.processing.scopes.LocationScopeProvider;
 import android.databinding.tool.processing.scopes.ScopeProvider;
 import android.databinding.tool.store.Location;
-import android.databinding.tool.util.L;
 import android.databinding.tool.util.LoggedErrorException;
 import android.databinding.tool.util.Preconditions;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;

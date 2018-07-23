@@ -19,12 +19,10 @@ package android.databinding.tool.reflection;
 import android.databinding.tool.ext.ExtKt;
 import android.databinding.tool.util.StringUtils;
 
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

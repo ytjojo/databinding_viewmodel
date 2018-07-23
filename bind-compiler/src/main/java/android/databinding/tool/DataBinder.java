@@ -38,7 +38,7 @@ import java.util.Set;
  */
 public class DataBinder {
     List<LayoutBinder> mLayoutBinders = new ArrayList<LayoutBinder>();
-    private static final String COMPONENT_CLASS = "android.databinding.DataBindingComponent";
+    private static final String COMPONENT_CLASS = "DataBindingComponent";
 
     private JavaFileWriter mFileWriter;
 

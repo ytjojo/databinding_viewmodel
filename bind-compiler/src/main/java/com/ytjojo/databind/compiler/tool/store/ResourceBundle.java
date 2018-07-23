@@ -13,7 +13,6 @@
 
 package com.ytjojo.databind.compiler.tool.store;
 
-import android.databinding.tool.DataBindingBuilder;
 import android.databinding.tool.processing.ErrorMessages;
 import android.databinding.tool.processing.Scope;
 import android.databinding.tool.processing.ScopedException;
@@ -22,21 +21,13 @@ import android.databinding.tool.processing.scopes.LocationScopeProvider;
 import android.databinding.tool.store.Location;
 import android.databinding.tool.util.L;
 import android.databinding.tool.util.ParserHelper;
-import android.databinding.tool.util.Preconditions;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOCase;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;

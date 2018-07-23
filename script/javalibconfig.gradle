@@ -98,5 +98,10 @@ sourceSets {
 }
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
+if(groovyEnable){
 
-[compileJava, compileGroovy, javadoc]*.options*.encoding = 'UTF-8'
+    [compileJava, compileGroovy, javadoc]*.options*.encoding = 'UTF-8'
+}else{
+    [compileJava, javadoc]*.options*.encoding = 'UTF-8'
+}
+

@@ -120,7 +120,7 @@ data class GenClassInfoLog(
             val qualifiedName: String
     ) {
         companion object {
-            fun from(bundle :ResourceBundle.LayoutFileBundle) =
+            fun from(bundle : ResourceBundle.LayoutFileBundle) =
                 GenClassImpl(
                         tag = bundle.createTag(),
                         merge = bundle.isMerge,

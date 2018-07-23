@@ -1,6 +1,5 @@
 package com.ytjojo.databind.compiler.tool;
 
-import android.databinding.BindingBuildInfo;
 import android.databinding.tool.writer.JavaFileWriter;
 
 import com.ytjojo.databind.compiler.tool.store.LayoutFileParser;
@@ -21,7 +20,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.xml.sax.SAXException;
 
 public class LayoutXmlProcessor {

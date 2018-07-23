@@ -517,11 +517,11 @@ class LayoutBinderWriter(val layoutBinder : LayoutBinder) {
         val rootTagsSupported = minSdk >= 14
         if (hasBaseBinder) {
             nl("")
-            nl("public $className(@Nullable android.databinding.DataBindingComponent bindingComponent, @NonNull $parameterType root) {") {
+            nl("public $className(@Nullable DataBindingComponent bindingComponent, @NonNull $parameterType root) {") {
                 tab("this(bindingComponent, root, mapBindings(bindingComponent, root, $bindingCount, sIncludes, sViewsWithIds));")
             }
             nl("}")
-            nl("private $className(android.databinding.DataBindingComponent bindingComponent, $parameterType root, Object[] bindings) {") {
+            nl("private $className(DataBindingComponent bindingComponent, $parameterType root, Object[] bindings) {") {
                 tab("super(bindingComponent, $superParam, ${model.observables.size}") {
                     layoutBinder.sortedTargets.filter { it.id != null }.forEach {
                         tab(", ${fieldConversion(it)}")
@@ -530,7 +530,7 @@ class LayoutBinderWriter(val layoutBinder : LayoutBinder) {
                 }
             }
         } else {
-            nl("public $baseClassName(@NonNull android.databinding.DataBindingComponent bindingComponent, @NonNull $parameterType root) {") {
+            nl("public $baseClassName(@NonNull DataBindingComponent bindingComponent, @NonNull $parameterType root) {") {
                 tab("super(bindingComponent, $superParam, ${model.observables.size});")
                 tab("final Object[] bindings = mapBindings(bindingComponent, root, $bindingCount, sIncludes, sViewsWithIds);")
             }
@@ -893,7 +893,7 @@ class LayoutBinderWriter(val layoutBinder : LayoutBinder) {
                     invClass = "android.databinding.ViewDataBinding.PropertyChangedInverseListener"
                     param = "BR.${inverseBinding.eventAttribute}"
                 } else {
-                    invClass = "android.databinding.InverseBindingListener"
+                    invClass = "InverseBindingListener"
                     param = ""
                 }
                 block("private $invClass ${inverseBinding.fieldName} = new $invClass($param)") {
@@ -1238,7 +1238,7 @@ class LayoutBinderWriter(val layoutBinder : LayoutBinder) {
             nl("return inflate(inflater, root, attachToRoot, android.databinding.DataBindingUtil.getDefaultComponent());")
         }
         nl("@NonNull")
-        block("public static $baseClassName inflate(@NonNull android.view.LayoutInflater inflater, @Nullable android.view.ViewGroup root, boolean attachToRoot, @Nullable android.databinding.DataBindingComponent bindingComponent)") {
+        block("public static $baseClassName inflate(@NonNull android.view.LayoutInflater inflater, @Nullable android.view.ViewGroup root, boolean attachToRoot, @Nullable DataBindingComponent bindingComponent)") {
             nl("return android.databinding.DataBindingUtil.<$baseClassName>inflate(inflater, ${layoutBinder.modulePackage}.R.layout.${layoutBinder.layoutname}, root, attachToRoot, bindingComponent);")
         }
         if (!layoutBinder.isMerge) {
@@ -1247,7 +1247,7 @@ class LayoutBinderWriter(val layoutBinder : LayoutBinder) {
                 nl("return inflate(inflater, android.databinding.DataBindingUtil.getDefaultComponent());")
             }
             nl("@NonNull")
-            block("public static $baseClassName inflate(@NonNull android.view.LayoutInflater inflater, @Nullable android.databinding.DataBindingComponent bindingComponent)") {
+            block("public static $baseClassName inflate(@NonNull android.view.LayoutInflater inflater, @Nullable DataBindingComponent bindingComponent)") {
                 nl("return bind(inflater.inflate(${layoutBinder.modulePackage}.R.layout.${layoutBinder.layoutname}, null, false), bindingComponent);")
             }
             nl("@NonNull")
@@ -1255,7 +1255,7 @@ class LayoutBinderWriter(val layoutBinder : LayoutBinder) {
                 nl("return bind(view, android.databinding.DataBindingUtil.getDefaultComponent());")
             }
             nl("@NonNull")
-            block("public static $baseClassName bind(@NonNull android.view.View view, @Nullable android.databinding.DataBindingComponent bindingComponent)") {
+            block("public static $baseClassName bind(@NonNull android.view.View view, @Nullable DataBindingComponent bindingComponent)") {
                 block("if (!\"${layoutBinder.tag}_0\".equals(view.getTag()))") {
                     nl("throw new RuntimeException(\"view tag isn't correct on view:\" + view.getTag());")
                 }
@@ -1273,7 +1273,7 @@ class LayoutBinderWriter(val layoutBinder : LayoutBinder) {
     public fun writeBaseClass(forLibrary: Boolean, variations: List<LayoutBinder>) : String =
             kcode("package ${layoutBinder.`package`};") {
                 Scope.reset()
-                nl("import android.databinding.Bindable;")
+                nl("import Bindable;")
                 nl("import android.databinding.DataBindingUtil;")
                 nl("import android.databinding.ViewDataBinding;")
                 nl("import android.support.annotation.NonNull;")
@@ -1296,7 +1296,7 @@ class LayoutBinderWriter(val layoutBinder : LayoutBinder) {
                     }
                 }
 
-                tab("protected $baseClassName(@Nullable android.databinding.DataBindingComponent bindingComponent, @Nullable android.view.View root_, int localFieldCount") {
+                tab("protected $baseClassName(@Nullable DataBindingComponent bindingComponent, @Nullable android.view.View root_, int localFieldCount") {
                     layoutBinder.sortedTargets.filter{it.id != null}.forEach {
                         tab(", ${it.interfaceClass} ${it.constructorParamName}")
                     }
@@ -1345,7 +1345,7 @@ class LayoutBinderWriter(val layoutBinder : LayoutBinder) {
                 }
                 tab("}")
                 tab("@NonNull")
-                tab("public static $baseClassName inflate(@NonNull android.view.LayoutInflater inflater, @Nullable android.view.ViewGroup root, boolean attachToRoot, @Nullable android.databinding.DataBindingComponent bindingComponent) {") {
+                tab("public static $baseClassName inflate(@NonNull android.view.LayoutInflater inflater, @Nullable android.view.ViewGroup root, boolean attachToRoot, @Nullable DataBindingComponent bindingComponent) {") {
                     if (forLibrary) {
                         tab("return null;")
                     } else {
@@ -1354,7 +1354,7 @@ class LayoutBinderWriter(val layoutBinder : LayoutBinder) {
                 }
                 tab("}")
                 tab("@NonNull")
-                tab("public static $baseClassName inflate(@NonNull android.view.LayoutInflater inflater, @Nullable android.databinding.DataBindingComponent bindingComponent) {") {
+                tab("public static $baseClassName inflate(@NonNull android.view.LayoutInflater inflater, @Nullable DataBindingComponent bindingComponent) {") {
                     if (forLibrary) {
                         tab("return null;")
                     } else {
@@ -1363,7 +1363,7 @@ class LayoutBinderWriter(val layoutBinder : LayoutBinder) {
                 }
                 tab("}")
                 tab("@NonNull")
-                tab("public static $baseClassName bind(@NonNull android.view.View view, @Nullable android.databinding.DataBindingComponent bindingComponent) {") {
+                tab("public static $baseClassName bind(@NonNull android.view.View view, @Nullable DataBindingComponent bindingComponent) {") {
                     if (forLibrary) {
                         tab("return null;")
                     } else {

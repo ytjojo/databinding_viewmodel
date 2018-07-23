@@ -15,7 +15,6 @@ package android.databinding.tool.writer;
 
 import org.apache.commons.io.FileUtils;
 
-import android.databinding.tool.processing.ScopedException;
 import android.databinding.tool.util.L;
 import android.databinding.tool.util.LoggedErrorException;
 
