@@ -58,17 +58,19 @@ repositories {
     // or better:
     jcenter()
 }
-
+def jdkHome = System.getenv("JAVA_HOME")
+println(jdkHome + "_______________")
 dependencies {
 //    compile gradleApi()
     compile fileTree(dir: 'libs', include: ['*.jar'])
     if(groovyEnable){
         compile localGroovy()
     }
-    compile 'org.ow2.asm:asm-all:5.0.4'
-    compile 'org.javassist:javassist:3.21.0-GA'
-    compile 'com.squareup:javapoet:1.9.0'
+
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+//    compile files("$jdkHome/lib/tools.jar")
+
 }
 
 repositories {

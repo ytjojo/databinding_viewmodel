@@ -16,6 +16,14 @@ dependencies {
     compile 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
     compile 'com.google.guava:guava:17.0'
     compile 'com.google.code.gson:gson:2.8.5'
+
+    compile 'org.ow2.asm:asm-all:5.0.4'
+    compile 'org.javassist:javassist:3.21.0-GA'
+    compile 'com.squareup:javapoet:1.9.0'
+    compile 'com.github.javaparser:javaparser-core:3.6.5'
+    compile 'com.github.javaparser:javaparser-symbol-solver-core:3.6.5'
+    fileTree(dir: "${System.properties['java.home']}/../lib", include: '*tools.jar')
+//    compile files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
 //    compile "android.arch.lifecycle:compiler:1.1.1"
 //    compile "android.arch.persistence.room:compiler:1.0.0"
 //    compile 'com.android.tools:annotations:24.5.0'

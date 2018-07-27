@@ -15,5 +15,5 @@ import java.lang.annotation.Target;
 public @interface Consumer {
 
     int[] value();
-    String method();
+    String attribute() default "";
 }

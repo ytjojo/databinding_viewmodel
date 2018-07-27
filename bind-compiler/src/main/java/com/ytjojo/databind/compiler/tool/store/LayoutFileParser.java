@@ -13,17 +13,17 @@
 
 package com.ytjojo.databind.compiler.tool.store;
 
-import android.databinding.parser.XMLLexer;
-import android.databinding.parser.XMLParser;
-import android.databinding.parser.XMLParserBaseVisitor;
-import android.databinding.tool.LayoutXmlProcessor;
-import android.databinding.tool.processing.Scope;
-import android.databinding.tool.processing.scopes.FileScopeProvider;
-import android.databinding.tool.store.Location;
-import android.databinding.tool.util.L;
-import android.databinding.tool.util.ParserHelper;
-import android.databinding.tool.util.Preconditions;
-import android.databinding.tool.util.StringUtils;
+import com.databinding.parser.XMLLexer;
+import com.databinding.parser.XMLParser;
+import com.databinding.parser.XMLParserBaseVisitor;
+import com.databinding.tool.LayoutXmlProcessor;
+import com.databinding.tool.processing.Scope;
+import com.databinding.tool.processing.scopes.FileScopeProvider;
+import com.databinding.tool.store.Location;
+import com.databinding.tool.util.L;
+import com.databinding.tool.util.ParserHelper;
+import com.databinding.tool.util.Preconditions;
+import com.databinding.tool.util.StringUtils;
 
 import com.google.common.base.Strings;
 import com.ytjojo.databind.compiler.tool.util.XmlEditor;

@@ -7,4 +7,6 @@ package com.github.ytjojo.databind.model;
 public class InfoItem {
 
     public String name;
+
+
 }

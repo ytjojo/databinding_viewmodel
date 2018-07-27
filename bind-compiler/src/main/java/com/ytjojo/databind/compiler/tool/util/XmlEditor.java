@@ -16,15 +16,15 @@
 
 package com.ytjojo.databind.compiler.tool.util;
 
-import android.databinding.parser.BindingExpressionBaseVisitor;
-import android.databinding.parser.BindingExpressionLexer;
-import android.databinding.parser.BindingExpressionParser;
-import android.databinding.parser.XMLLexer;
-import android.databinding.parser.XMLParser;
-import android.databinding.parser.XMLParser.AttributeContext;
-import android.databinding.parser.XMLParser.ElementContext;
-import android.databinding.tool.util.L;
-import android.databinding.tool.util.StringUtils;
+import com.databinding.parser.BindingExpressionBaseVisitor;
+import com.databinding.parser.BindingExpressionLexer;
+import com.databinding.parser.BindingExpressionParser;
+import com.databinding.parser.XMLLexer;
+import com.databinding.parser.XMLParser;
+import com.databinding.parser.XMLParser.AttributeContext;
+import com.databinding.parser.XMLParser.ElementContext;
+import com.databinding.tool.util.L;
+import com.databinding.tool.util.StringUtils;
 
 import com.google.common.base.Joiner;
 import com.google.common.xml.XmlEscapers;

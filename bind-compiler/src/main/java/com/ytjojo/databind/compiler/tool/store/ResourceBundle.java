@@ -13,14 +13,14 @@
 
 package com.ytjojo.databind.compiler.tool.store;
 
-import android.databinding.tool.processing.ErrorMessages;
-import android.databinding.tool.processing.Scope;
-import android.databinding.tool.processing.ScopedException;
-import android.databinding.tool.processing.scopes.FileScopeProvider;
-import android.databinding.tool.processing.scopes.LocationScopeProvider;
-import android.databinding.tool.store.Location;
-import android.databinding.tool.util.L;
-import android.databinding.tool.util.ParserHelper;
+import com.databinding.tool.processing.ErrorMessages;
+import com.databinding.tool.processing.Scope;
+import com.databinding.tool.processing.ScopedException;
+import com.databinding.tool.processing.scopes.FileScopeProvider;
+import com.databinding.tool.processing.scopes.LocationScopeProvider;
+import com.databinding.tool.store.Location;
+import com.databinding.tool.util.L;
+import com.databinding.tool.util.ParserHelper;
 
 import java.io.File;
 import java.io.InputStream;
