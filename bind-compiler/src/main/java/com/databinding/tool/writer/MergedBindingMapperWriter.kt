@@ -20,11 +20,7 @@ import com.databinding.tool.DataBindingCompilerArgs
 import com.databinding.tool.ext.N
 import com.databinding.tool.ext.S
 import com.databinding.tool.ext.T
-import com.squareup.javapoet.ClassName
-import com.squareup.javapoet.CodeBlock
-import com.squareup.javapoet.FieldSpec
-import com.squareup.javapoet.MethodSpec
-import com.squareup.javapoet.TypeSpec
+import com.squareup.javapoet.*
 import javax.lang.model.element.Modifier
 
 class MergedBindingMapperWriter(private val packages: List<String>,

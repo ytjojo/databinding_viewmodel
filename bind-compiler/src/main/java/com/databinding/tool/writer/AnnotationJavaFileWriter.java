@@ -15,9 +15,9 @@
  */
 package com.databinding.tool.writer;
 
-import org.apache.commons.io.IOUtils;
-
 import com.databinding.tool.util.L;
+
+import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.Writer;

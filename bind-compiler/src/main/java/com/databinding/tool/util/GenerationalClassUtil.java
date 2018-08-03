@@ -16,14 +16,12 @@
 
 package com.databinding.tool.util;
 
+import android.support.annotation.Nullable;
+
 import com.databinding.annotationprocessor.ProcessExpressions;
 import com.databinding.tool.Context;
 import com.databinding.tool.DataBindingBuilder;
 import com.databinding.tool.DataBindingCompilerArgs;
-import android.support.annotation.Nullable;
-
-
-import com.databinding.tool.Context;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;

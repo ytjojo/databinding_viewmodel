@@ -14,6 +14,7 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.view.View;
+
 import com.example.jhordan.people_mvvm.PeopleApplication;
 import com.example.jhordan.people_mvvm.data.PeopleFactory;
 import com.example.jhordan.people_mvvm.data.PeopleResponse;
@@ -21,13 +22,14 @@ import com.example.jhordan.people_mvvm.data.PeopleService;
 import com.example.jhordan.people_mvvm.model.People;
 import com.github.ytjojo.article.R;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
 
 public class PeopleViewModel extends Observable {
 

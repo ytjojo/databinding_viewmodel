@@ -25,7 +25,6 @@ import com.databinding.tool.util.ParserHelper;
 import com.databinding.tool.util.Preconditions;
 import com.databinding.tool.util.StringUtils;
 import com.databinding.tool.util.XmlEditor;
-
 import com.google.common.base.Strings;
 
 import org.antlr.v4.runtime.ANTLRInputStream;

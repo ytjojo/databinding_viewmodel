@@ -19,7 +19,6 @@ package com.databinding.tool.expr;
 import com.databinding.tool.reflection.ModelAnalyzer;
 import com.databinding.tool.reflection.ModelClass;
 import com.databinding.tool.writer.KCode;
-
 import com.google.common.base.Joiner;
 
 import java.util.List;

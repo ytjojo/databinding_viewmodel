@@ -18,12 +18,7 @@ package com.databinding.tool.expr
 
 import com.databinding.tool.reflection.Callable
 import com.databinding.tool.solver.ExecutionPath
-import com.databinding.tool.writer.KCode
-import com.databinding.tool.writer.fieldName
-import com.databinding.tool.writer.isForcedToLocalize
-import com.databinding.tool.writer.isVariable
-import com.databinding.tool.writer.kcode
-import com.databinding.tool.writer.scopedName
+import com.databinding.tool.writer.*
 
 fun Expr.shouldLocalizeInCallbacks() = canBeEvaluatedToAVariable() && !resolvedType.isVoid && (isDynamic || isForcedToLocalize())
 

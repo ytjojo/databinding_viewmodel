@@ -20,6 +20,8 @@ if(!Boolean.parseBoolean(MAVEN_RELEASE_REMOTE)){
                 version = VERSION_NAME
                 group = GROUP
 
+                println(project.getName() + "  "+ group)
+
                 pom.groupId = GROUP
                 pom.artifactId = POM_ARTIFACT_ID
                 pom.version = VERSION_NAME

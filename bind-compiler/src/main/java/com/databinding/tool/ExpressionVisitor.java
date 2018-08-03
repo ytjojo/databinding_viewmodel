@@ -16,6 +16,8 @@
 
 package com.databinding.tool;
 
+import android.support.annotation.NonNull;
+
 import com.databinding.parser.BindingExpressionBaseVisitor;
 import com.databinding.parser.BindingExpressionParser;
 import com.databinding.tool.expr.CallbackExprModel;
@@ -25,8 +27,6 @@ import com.databinding.tool.expr.StaticIdentifierExpr;
 import com.databinding.tool.reflection.ModelAnalyzer;
 import com.databinding.tool.reflection.ModelClass;
 import com.databinding.tool.util.Preconditions;
-import android.support.annotation.NonNull;
-
 import com.google.common.base.Objects;
 
 import org.antlr.v4.runtime.ParserRuleContext;

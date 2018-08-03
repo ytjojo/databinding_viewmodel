@@ -18,8 +18,6 @@ package com.databinding.tool.reflection;
 
 import com.databinding.tool.Context;
 
-import com.databinding.tool.Context;
-
 public abstract class TypeUtil {
 
     public static final String BYTE = "B";

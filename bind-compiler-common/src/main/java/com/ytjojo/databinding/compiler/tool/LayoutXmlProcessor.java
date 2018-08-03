@@ -1,7 +1,6 @@
 package com.ytjojo.databinding.compiler.tool;
 
-import android.databinding.tool.writer.JavaFileWriter;
-
+import com.databinding.tool.writer.JavaFileWriter;
 import com.ytjojo.databinding.compiler.tool.store.LayoutFileParser;
 import com.ytjojo.databinding.compiler.tool.store.ResourceBundle;
 

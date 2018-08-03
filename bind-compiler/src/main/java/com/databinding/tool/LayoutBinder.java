@@ -16,6 +16,8 @@
 
 package com.databinding.tool;
 
+import android.support.annotation.Nullable;
+
 import com.databinding.tool.expr.Dependency;
 import com.databinding.tool.expr.Expr;
 import com.databinding.tool.expr.ExprModel;
@@ -28,10 +30,6 @@ import com.databinding.tool.util.L;
 import com.databinding.tool.util.Preconditions;
 import com.databinding.tool.writer.LayoutBinderWriter;
 import com.databinding.tool.writer.LayoutBinderWriterKt;
-import android.support.annotation.Nullable;
-
-
-import com.databinding.tool.writer.LayoutBinderWriter;
 
 import java.util.ArrayList;
 import java.util.Collections;

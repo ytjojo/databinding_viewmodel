@@ -21,7 +21,6 @@ import com.databinding.parser.BindingExpressionLexer;
 import com.databinding.parser.BindingExpressionParser;
 import com.databinding.parser.XMLLexer;
 import com.databinding.parser.XMLParser;
-
 import com.google.common.base.Joiner;
 import com.google.common.xml.XmlEscapers;
 

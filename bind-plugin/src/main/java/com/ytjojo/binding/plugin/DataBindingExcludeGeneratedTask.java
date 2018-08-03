@@ -1,16 +1,15 @@
 package com.ytjojo.binding.plugin;
 
-import org.apache.commons.io.FileUtils;
+import android.databinding.tool.processing.Scope;
+import android.databinding.tool.util.L;
+
+import com.google.common.base.Preconditions;
+
 import org.apache.commons.io.IOUtils;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.bundling.Jar;
-
-import android.databinding.tool.processing.Scope;
-import android.databinding.tool.util.L;
-
-import com.google.common.base.Preconditions;
 
 import java.io.File;
 import java.io.FileInputStream;

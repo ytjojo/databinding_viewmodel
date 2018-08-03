@@ -21,7 +21,6 @@ import com.databinding.tool.processing.ScopedException;
 import com.databinding.tool.util.L;
 import com.databinding.tool.util.Preconditions;
 import com.databinding.tool.writer.JavaFileWriter;
-
 import com.google.common.collect.ImmutableList;
 
 import org.apache.commons.io.FileUtils;

@@ -20,7 +20,6 @@ import com.databinding.tool.ext.ExtKt;
 import com.databinding.tool.reflection.Callable.Type;
 import com.databinding.tool.util.L;
 import com.databinding.tool.util.StringUtils;
-
 import com.google.common.collect.ImmutableMap;
 import com.squareup.javapoet.TypeName;
 

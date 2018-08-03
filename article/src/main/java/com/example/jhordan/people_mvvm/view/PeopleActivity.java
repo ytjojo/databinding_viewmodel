@@ -25,6 +25,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.example.jhordan.people_mvvm.data.PeopleFactory;
 import com.example.jhordan.people_mvvm.viewmodel.PeopleViewModel;
 import com.github.ytjojo.article.R;

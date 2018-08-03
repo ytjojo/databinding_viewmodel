@@ -16,33 +16,14 @@
 
 package com.ytjojo.databinding.compiler.tool.util;
 
-import android.databinding.parser.BindingExpressionBaseVisitor;
-import android.databinding.parser.BindingExpressionLexer;
-import android.databinding.parser.BindingExpressionParser;
-import android.databinding.parser.XMLLexer;
-import android.databinding.parser.XMLParser;
-import android.databinding.parser.XMLParser.AttributeContext;
-import android.databinding.parser.XMLParser.ElementContext;
-import android.databinding.tool.util.L;
-import android.databinding.tool.util.StringUtils;
-import com.google.common.base.Joiner;
-import com.google.common.xml.XmlEscapers;
+import com.databinding.parser.XMLParser.AttributeContext;
+import com.databinding.parser.XMLParser.ElementContext;
+import com.databinding.tool.util.L;
 import com.ytjojo.databinding.compiler.tool.store.LayoutFileParser;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.antlr.v4.runtime.tree.TerminalNode;
-import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -51,102 +32,6 @@ import java.util.List;
  */
 public class XmlEditor {
 
-    public static String strip(File f, String newTag, String encoding) throws IOException {
-        FileInputStream fin = new FileInputStream(f);
-        InputStreamReader reader = new InputStreamReader(fin, encoding);
-        ANTLRInputStream inputStream = new ANTLRInputStream(reader);
-        XMLLexer lexer = new XMLLexer(inputStream);
-        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        XMLParser parser = new XMLParser(tokenStream);
-        XMLParser.DocumentContext expr = parser.document();
-        ElementContext root = expr.element();
-
-        if (root == null || !"layout".equals(nodeName(root))) {
-            return null; // not a binding layout
-        }
-
-        List<? extends ElementContext> childrenOfRoot = elements(root);
-        List<? extends ElementContext> dataNodes = filterNodesByName("data", childrenOfRoot);
-        if (dataNodes.size() > 1) {
-            L.e("Multiple binding data tags in %s. Expecting a maximum of one.",
-                    f.getAbsolutePath());
-        }
-
-        ArrayList<String> lines = new ArrayList<String>();
-        lines.addAll(FileUtils.readLines(f, encoding));
-
-        for (ElementContext it : dataNodes) {
-            replace(lines, toPosition(it.getStart()), toEndPosition(it.getStop()), "");
-        }
-        List<? extends ElementContext> layoutNodes =
-                excludeNodesByName("data", childrenOfRoot);
-        if (layoutNodes.size() != 1) {
-            L.e("Only one layout element and one data element are allowed. %s has %d",
-                    f.getAbsolutePath(), layoutNodes.size());
-        }
-
-        final ElementContext layoutNode = layoutNodes.get(0);
-
-        ArrayList<TagAndContext> noTag = new ArrayList<TagAndContext>();
-
-        recurseReplace(layoutNode, lines, noTag, newTag, 0);
-
-        // Remove the <layout>
-        Position rootStartTag = toPosition(root.getStart());
-        Position rootEndTag = toPosition(root.content().getStart());
-        replace(lines, rootStartTag, rootEndTag, "");
-
-        // Remove the </layout>
-        PositionPair endLayoutPositions = findTerminalPositions(root, lines);
-        replace(lines, endLayoutPositions.left, endLayoutPositions.right, "");
-
-        StringBuilder rootAttributes = new StringBuilder();
-        for (AttributeContext attr : attributes(root)) {
-            rootAttributes.append(' ').append(attr.getText());
-        }
-        TagAndContext noTagRoot = null;
-        for (TagAndContext tagAndContext : noTag) {
-            if (tagAndContext.getContext() == layoutNode) {
-                noTagRoot = tagAndContext;
-                break;
-            }
-        }
-
-        if (noTagRoot != null) {
-            TagAndContext newRootTag = new TagAndContext(
-                    noTagRoot.getTag() + rootAttributes.toString(), layoutNode);
-            int index = noTag.indexOf(noTagRoot);
-            noTag.set(index, newRootTag);
-        } else {
-            TagAndContext newRootTag =
-                    new TagAndContext(rootAttributes.toString(), layoutNode);
-            noTag.add(newRootTag);
-        }
-        //noinspection NullableProblems
-        Collections.sort(noTag, new Comparator<TagAndContext>() {
-            @Override
-            public int compare(TagAndContext o1, TagAndContext o2) {
-                Position start1 = toPosition(o1.getContext().getStart());
-                Position start2 = toPosition(o2.getContext().getStart());
-                int lineCmp = start2.line - start1.line;
-                if (lineCmp != 0) {
-                    return lineCmp;
-                }
-                return start2.charIndex - start1.charIndex;
-            }
-        });
-        for (TagAndContext it : noTag) {
-            ElementContext element = it.getContext();
-            String tag = it.getTag();
-            Position endTagPosition = endTagPosition(element);
-            fixPosition(lines, endTagPosition);
-            String line = lines.get(endTagPosition.line);
-            String newLine = line.substring(0, endTagPosition.charIndex) + " " + tag +
-                    line.substring(endTagPosition.charIndex);
-            lines.set(endTagPosition.line, newLine);
-        }
-        return Joiner.on(StringUtils.LINE_SEPARATOR).join(lines);
-    }
 
     private static <T extends ElementContext> List<T>
     filterNodesByName(String name, Iterable<T> items) {
@@ -286,98 +171,7 @@ public class XmlEditor {
         }
     }
 
-    private static int recurseReplace(ElementContext node, ArrayList<String> lines,
-                                      ArrayList<TagAndContext> noTag,
-                                      String newTag, int bindingIndex) {
-        int nextBindingIndex = bindingIndex;
-        boolean isMerge = "merge".equals(nodeName(node));
-        final boolean containsInclude = filterNodesByName("include", elements(node)).size() > 0;
-        if (!isMerge && (hasExpressionAttributes(node) || newTag != null || containsInclude)) {
-            String tag = "";
-            if (newTag != null) {
-                tag = "android:tag=\"" + newTag + "_" + bindingIndex + "\"";
-                nextBindingIndex++;
-            } else if (!"include".equals(nodeName(node))) {
-                tag = "android:tag=\"binding_" + bindingIndex + "\"";
-                nextBindingIndex++;
-            }
-            for (AttributeContext it : expressionAttributes(node)) {
-                Position start = toPosition(it.getStart());
-                Position end = toEndPosition(it.getStop());
-                String defaultVal = defaultReplacement(it);
-                if (defaultVal != null) {
-                    replace(lines, start, end, it.attrName.getText() + "=\"" + defaultVal + "\"");
-                } else if (replace(lines, start, end, tag)) {
-                    tag = "";
-                }
-            }
-            if (tag.length() != 0) {
-                noTag.add(new TagAndContext(tag, node));
-            }
-        }
 
-        String nextTag;
-        if (bindingIndex == 0 && isMerge) {
-            nextTag = newTag;
-        } else {
-            nextTag = null;
-        }
-        for (ElementContext it : elements(node)) {
-            nextBindingIndex = recurseReplace(it, lines, noTag, nextTag, nextBindingIndex);
-        }
-        return nextBindingIndex;
-    }
-
-    private static String defaultReplacement(AttributeContext attr) {
-        String textWithQuotes = attr.attrValue.getText();
-        String escapedText = textWithQuotes.substring(1, textWithQuotes.length() - 1);
-        final boolean isTwoWay = escapedText.startsWith("@={");
-        final boolean isOneWay = escapedText.startsWith("@{");
-        if ((!isTwoWay && !isOneWay) || !escapedText.endsWith("}")) {
-            return null;
-        }
-        final int startIndex = isTwoWay ? 3 : 2;
-        final int endIndex = escapedText.length() - 1;
-        String text = StringUtils.unescapeXml(escapedText.substring(startIndex, endIndex));
-        ANTLRInputStream inputStream = new ANTLRInputStream(text);
-        BindingExpressionLexer lexer = new BindingExpressionLexer(inputStream);
-        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        BindingExpressionParser parser = new BindingExpressionParser(tokenStream);
-        parser.getErrorListeners().clear();
-        BindingExpressionParser.BindingSyntaxContext root = parser.bindingSyntax();
-        BindingExpressionParser.DefaultsContext defaults = root
-                .accept(new BindingExpressionBaseVisitor<BindingExpressionParser.DefaultsContext>() {
-                    @Override
-                    public BindingExpressionParser.DefaultsContext visitDefaults(
-                            @NotNull BindingExpressionParser.DefaultsContext ctx) {
-                        return ctx;
-                    }
-                });
-        if (defaults != null) {
-            BindingExpressionParser.ConstantValueContext constantValue = defaults
-                    .constantValue();
-            BindingExpressionParser.LiteralContext literal = constantValue.literal();
-            if (literal != null) {
-                BindingExpressionParser.StringLiteralContext stringLiteral = literal
-                        .stringLiteral();
-                if (stringLiteral != null) {
-                    TerminalNode doubleQuote = stringLiteral.DoubleQuoteString();
-                    if (doubleQuote != null) {
-                        String quotedStr = doubleQuote.getText();
-                        String unquoted = quotedStr.substring(1, quotedStr.length() - 1);
-                        return XmlEscapers.xmlAttributeEscaper().escape(unquoted);
-                    } else {
-                        String quotedStr = stringLiteral.SingleQuoteString().getText();
-                        String unquoted = quotedStr.substring(1, quotedStr.length() - 1);
-                        String unescaped = unquoted.replace("\"", "\\\"").replace("\\`", "`");
-                        return XmlEscapers.xmlAttributeEscaper().escape(unescaped);
-                    }
-                }
-            }
-            return constantValue.getText();
-        }
-        return null;
-    }
 
     private static PositionPair findTerminalPositions(ElementContext node,
                                                       ArrayList<String> lines) {

@@ -25,12 +25,6 @@ import com.databinding.tool.writer.BindingMapperWriter;
 import com.databinding.tool.writer.BindingMapperWriterV2;
 import com.databinding.tool.writer.JavaFileWriter;
 import com.databinding.tool.writer.MergedBindingMapperWriter;
-
-import com.databinding.tool.store.GenClassInfoLog;
-import com.databinding.tool.writer.BRWriter;
-import com.databinding.tool.writer.BindingMapperWriter;
-import com.databinding.tool.writer.BindingMapperWriterV2;
-import com.databinding.tool.writer.MergedBindingMapperWriter;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 

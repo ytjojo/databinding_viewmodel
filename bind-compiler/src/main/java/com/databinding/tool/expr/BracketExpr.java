@@ -20,7 +20,6 @@ import com.databinding.tool.reflection.ModelAnalyzer;
 import com.databinding.tool.reflection.ModelClass;
 import com.databinding.tool.solver.ExecutionPath;
 import com.databinding.tool.writer.KCode;
-
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;

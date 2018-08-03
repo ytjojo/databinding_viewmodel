@@ -1,13 +1,7 @@
 package com.ytjojo.databind.compiler.annotationprocessor;
 
-import com.databinding.tool.util.BrNameUtil;
-import com.ytjojo.databind.compiler.annotationprocessor.util.TypeUtil;
-
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
-import javax.lang.model.element.Element;
 import javax.lang.model.element.VariableElement;
 
 /**

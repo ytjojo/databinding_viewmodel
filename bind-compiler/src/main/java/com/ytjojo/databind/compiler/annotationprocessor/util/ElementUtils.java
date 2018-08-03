@@ -3,7 +3,6 @@ package com.ytjojo.databind.compiler.annotationprocessor.util;
 import com.databinding.tool.util.L;
 import com.ytjojo.databind.compiler.annotationprocessor.BindingProcesor;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 

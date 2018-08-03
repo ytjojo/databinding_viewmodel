@@ -27,9 +27,6 @@ import com.databinding.tool.writer.AnnotationJavaFileWriter;
 import com.databinding.tool.writer.BRWriter;
 import com.databinding.tool.writer.JavaFileWriter;
 
-import com.databinding.tool.Context;
-import com.databinding.tool.writer.BRWriter;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -38,7 +35,6 @@ import java.util.stream.Collectors;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 import javax.xml.bind.JAXBException;

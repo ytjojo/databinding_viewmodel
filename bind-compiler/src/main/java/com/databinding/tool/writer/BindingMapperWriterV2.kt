@@ -17,24 +17,11 @@
 package com.databinding.tool.writer
 
 import com.databinding.tool.DataBindingCompilerArgs
-import com.databinding.tool.ext.L
-import com.databinding.tool.ext.N
-import com.databinding.tool.ext.S
-import com.databinding.tool.ext.T
-import com.databinding.tool.ext.stripNonJava
+import com.databinding.tool.ext.*
 import com.databinding.tool.reflection.ModelAnalyzer
 import com.databinding.tool.store.GenClassInfoLog
-import com.squareup.javapoet.AnnotationSpec
-import com.squareup.javapoet.ArrayTypeName
-import com.squareup.javapoet.ClassName
-import com.squareup.javapoet.CodeBlock
-import com.squareup.javapoet.FieldSpec
-import com.squareup.javapoet.MethodSpec
-import com.squareup.javapoet.ParameterSpec
-import com.squareup.javapoet.ParameterizedTypeName
-import com.squareup.javapoet.TypeName
-import com.squareup.javapoet.TypeSpec
-import java.util.Locale
+import com.squareup.javapoet.*
+import java.util.*
 import javax.annotation.Generated
 import javax.lang.model.element.Modifier
 

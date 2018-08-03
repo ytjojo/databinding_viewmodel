@@ -31,8 +31,6 @@ import com.databinding.tool.util.L;
 import com.databinding.tool.util.Preconditions;
 import com.databinding.tool.util.StringUtils;
 import com.databinding.tool.writer.KCode;
-
-import com.databinding.tool.writer.KCode;
 import com.google.common.collect.Lists;
 
 import java.util.HashSet;

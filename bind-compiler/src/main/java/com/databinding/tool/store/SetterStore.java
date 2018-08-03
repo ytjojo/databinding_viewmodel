@@ -15,6 +15,9 @@
  */
 package com.databinding.tool.store;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.databinding.InverseBindingListener;
 import com.databinding.tool.Context;
 import com.databinding.tool.reflection.ModelAnalyzer;
@@ -25,11 +28,6 @@ import com.databinding.tool.util.GenerationalClassUtil;
 import com.databinding.tool.util.L;
 import com.databinding.tool.util.Preconditions;
 import com.databinding.tool.util.StringUtils;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
-
-import com.databinding.tool.Context;
 
 import java.io.IOException;
 import java.io.Serializable;

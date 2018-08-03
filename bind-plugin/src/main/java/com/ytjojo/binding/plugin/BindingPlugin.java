@@ -1,9 +1,5 @@
 package com.ytjojo.binding.plugin;
 
-import android.databinding.tool.DataBindingBuilder;
-import android.databinding.tool.util.L;
-import android.databinding.tool.util.StringUtils;
-import android.databinding.tool.writer.JavaFileWriter;
 
 import com.android.build.gradle.AppExtension;
 import com.android.build.gradle.BaseExtension;
@@ -21,20 +17,17 @@ import com.android.build.gradle.internal.variant.BaseVariantData;
 import com.android.build.gradle.internal.variant.LibraryVariantData;
 import com.android.build.gradle.internal.variant.TestVariantData;
 import com.android.build.gradle.tasks.MergeResources;
-import com.android.build.gradle.tasks.ProcessAndroidResources;
-import org.gradle.api.logging.Logger;
-import com.android.builder.model.ApiVersion;
 import com.android.builder.model.SourceProvider;
-import com.google.common.base.Preconditions;
+import com.databinding.tool.util.L;
+import com.databinding.tool.writer.JavaFileWriter;
 import com.ytjojo.databinding.compiler.tool.LayoutXmlProcessor;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.logging.LogLevel;
-import org.gradle.api.tasks.bundling.Jar;
-import org.gradle.api.tasks.compile.AbstractCompile;
+import org.gradle.api.logging.Logger;
+import org.gradle.internal.impldep.org.apache.commons.lang.StringUtils;
 import org.gradle.internal.impldep.org.apache.commons.lang.exception.ExceptionUtils;
 import org.xml.sax.SAXException;
 
@@ -128,6 +121,8 @@ public class BindingPlugin implements Plugin<Project> {
         return (ApplicationVariantData) field.get(variant);
     }
 
+
+
     private void attachXmlProcessor(Project project, final BaseVariantData variantData,
                                     final File sdkDir,
                                     final Boolean isLibrary,BaseVariant variant) {
@@ -143,7 +138,17 @@ public class BindingPlugin implements Plugin<Project> {
         final File codeGenTargetFolder = new File(project.getBuildDir() + "/data-binding-info/" +
                 configuration.getDirName());
         String writerOutBase = codeGenTargetFolder.getAbsolutePath();
-        JavaFileWriter fileWriter = new DataBindingBuilder.GradleFileWriter(writerOutBase);
+        JavaFileWriter fileWriter = new JavaFileWriter() {
+            @Override
+            public void writeToFile(String canonicalName, String contents) {
+
+            }
+
+            @Override
+            public void deleteFile(String canonicalName) {
+
+            }
+        };
         final LayoutXmlProcessor xmlProcessor = new LayoutXmlProcessor(packageName, resourceFolders,
                 fileWriter,apiLevel, isLibrary);
         final MergeResources processResTask =  variantData.mergeResourcesTask;;

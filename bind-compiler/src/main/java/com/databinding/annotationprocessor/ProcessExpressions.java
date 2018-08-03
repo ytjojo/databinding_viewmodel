@@ -28,7 +28,6 @@ import com.databinding.tool.util.L;
 import com.databinding.tool.util.LoggedErrorException;
 import com.databinding.tool.util.Preconditions;
 import com.databinding.tool.util.StringUtils;
-
 import com.google.common.base.Joiner;
 
 import org.apache.commons.io.Charsets;

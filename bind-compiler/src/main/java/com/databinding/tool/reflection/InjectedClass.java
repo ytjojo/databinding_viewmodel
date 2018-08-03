@@ -18,7 +18,6 @@ package com.databinding.tool.reflection;
 
 import com.databinding.tool.ext.ExtKt;
 import com.databinding.tool.util.StringUtils;
-
 import com.squareup.javapoet.TypeName;
 
 import java.util.ArrayList;

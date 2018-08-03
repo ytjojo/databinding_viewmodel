@@ -25,7 +25,6 @@ import com.databinding.parser.XMLParser.AttributeContext;
 import com.databinding.parser.XMLParser.ElementContext;
 import com.databinding.tool.util.L;
 import com.databinding.tool.util.StringUtils;
-
 import com.google.common.base.Joiner;
 import com.google.common.xml.XmlEscapers;
 import com.ytjojo.databind.compiler.tool.store.LayoutFileParser;

@@ -17,10 +17,10 @@
 package com.databinding.tool;
 
 
+import android.support.annotation.Nullable;
+
 import com.databinding.tool.util.Preconditions;
 import com.google.common.collect.Sets;
-
-import android.support.annotation.Nullable;
 
 import java.io.File;
 import java.util.HashMap;

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.github.ytjojo.databinding'
 android {
     compileSdkVersion 25
     buildToolsVersion "27.0.3"

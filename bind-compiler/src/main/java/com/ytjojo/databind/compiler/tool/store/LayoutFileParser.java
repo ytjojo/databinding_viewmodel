@@ -24,7 +24,6 @@ import com.databinding.tool.util.L;
 import com.databinding.tool.util.ParserHelper;
 import com.databinding.tool.util.Preconditions;
 import com.databinding.tool.util.StringUtils;
-
 import com.google.common.base.Strings;
 import com.ytjojo.databind.compiler.tool.util.XmlEditor;
 

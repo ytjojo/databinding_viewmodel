@@ -1,9 +1,10 @@
 package com.ytjojo.databind.compiler.tool;
 
 import com.databinding.tool.writer.JavaFileWriter;
-
 import com.ytjojo.databind.compiler.tool.store.LayoutFileParser;
 import com.ytjojo.databind.compiler.tool.store.ResourceBundle;
+
+import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -14,13 +15,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
-
-import org.xml.sax.SAXException;
 
 public class LayoutXmlProcessor {
     private final JavaFileWriter mFileWriter;

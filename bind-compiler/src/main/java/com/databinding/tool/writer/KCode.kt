@@ -16,7 +16,7 @@ package com.databinding.tool.writer
 import com.databinding.tool.reflection.ModelAnalyzer
 import com.databinding.tool.reflection.ModelAnalyzer.GENERATED_ANNOTATION
 import com.databinding.tool.util.StringUtils
-import java.util.BitSet
+import java.util.*
 
 class KCode (private val s : String? = null){
 

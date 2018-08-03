@@ -13,14 +13,14 @@
 
 package com.databinding.tool;
 
-import org.apache.commons.io.FileUtils;
-import org.xml.sax.SAXException;
-
 import com.databinding.BindingBuildInfo;
 import com.databinding.tool.store.LayoutFileParser;
 import com.databinding.tool.store.ResourceBundle;
 import com.databinding.tool.util.Preconditions;
 import com.databinding.tool.writer.JavaFileWriter;
+
+import org.apache.commons.io.FileUtils;
+import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.FilenameFilter;

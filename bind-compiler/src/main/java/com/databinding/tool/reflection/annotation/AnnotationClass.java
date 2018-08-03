@@ -21,7 +21,6 @@ import com.databinding.tool.reflection.ModelField;
 import com.databinding.tool.reflection.ModelMethod;
 import com.databinding.tool.reflection.TypeUtil;
 import com.databinding.tool.util.L;
-
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 

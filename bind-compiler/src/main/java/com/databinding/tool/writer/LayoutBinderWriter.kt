@@ -13,22 +13,8 @@
 
 package com.databinding.tool.writer
 
-import com.databinding.tool.Binding
-import com.databinding.tool.BindingTarget
-import com.databinding.tool.CallbackWrapper
-import com.databinding.tool.InverseBinding
-import com.databinding.tool.LayoutBinder
-import com.databinding.tool.expr.Expr
-import com.databinding.tool.expr.ExprModel
-import com.databinding.tool.expr.FieldAccessExpr
-import com.databinding.tool.expr.IdentifierExpr
-import com.databinding.tool.expr.LambdaExpr
-import com.databinding.tool.expr.ListenerExpr
-import com.databinding.tool.expr.ResourceExpr
-import com.databinding.tool.expr.TernaryExpr
-import com.databinding.tool.expr.localizeGlobalVariables
-import com.databinding.tool.expr.shouldLocalizeInCallbacks
-import com.databinding.tool.expr.toCode
+import com.databinding.tool.*
+import com.databinding.tool.expr.*
 import com.databinding.tool.ext.androidId
 import com.databinding.tool.ext.br
 import com.databinding.tool.ext.lazyProp
@@ -39,10 +25,7 @@ import com.databinding.tool.reflection.ModelAnalyzer
 import com.databinding.tool.reflection.ModelClass
 import com.databinding.tool.util.L
 import com.databinding.tool.util.Preconditions
-import java.util.ArrayList
-import java.util.Arrays
-import java.util.BitSet
-import java.util.HashMap
+import java.util.*
 
 enum class Scope {
     GLOBAL,

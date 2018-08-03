@@ -22,8 +22,6 @@ import com.databinding.tool.reflection.ModelClass;
 import com.databinding.tool.util.Preconditions;
 import com.databinding.tool.writer.KCode;
 import com.databinding.tool.writer.LayoutBinderWriterKt;
-
-import com.databinding.tool.writer.KCode;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;

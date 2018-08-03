@@ -1,10 +1,138 @@
 apply from: rootProject.file('./script/javalibconfig.gradle')
+
+project.afterEvaluate {
+
+    project.tasks.each {
+        if (it instanceof JavaCompile && "compileJava".equals(it.getName())) {
+
+            JavaCompile javaCompile = it
+//            javaCompile.setClasspath(javaCompile.classpath.plus(project.file("dep")))
+            javaCompile.classpath.each {
+                println it.absoluteFile.absolutePath
+            }
+            javaCompile.setClasspath(javaCompile.classpath + project.files("/Users/jiulongteng/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.1.3/1b1884e0c0083ecd83400210659252eacee151b4/gradle-3.1.3.jar"))
+
+//            javaCompile.classpath+=project.file()
+        }
+    }
+
+
+}
+compileJava {
+
+
+}
+
+
+tasks.withType(JavaCompile) {
+    doFirst {
+
+        println("::::::::::")
+    }
+}
+
+
+private static void configureCompileJavaTask(final Project project) {
+    final JavaCompile compileTestJava = (JavaCompile) project.getTasks()
+            .findByName(JavaPlugin.COMPILE_JAVA_TASK_NAME);
+    final SourceSet main = ((SourceSetContainer) project.getProperties().get("sourceSets")).getByName("main")
+
+    main.setCompileClasspath(main.compileClasspath + project.files("/Users/jiulongteng/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.1.3/1b1884e0c0083ecd83400210659252eacee151b4/gradle-3.1.3.jar"))
+
+    compileTestJava.doFirst(new Action<Task>() {
+        @Override
+        public void execute(Task task) {
+            println(" configureCompileJavaTask ")
+
+        }
+    });
+    compileTestJava.setClasspath(compileTestJava.classpath + project.files("/Users/jiulongteng/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.1.3/1b1884e0c0083ecd83400210659252eacee151b4/gradle-3.1.3.jar"))
+}
+
+configureCompileJavaTask(project)
+
+Configuration configuration = project.configurations.create("provided")
+configuration.canBeResolved = true;
+configuration.canBeConsumed = true;
+configuration.transitive = false
+configuration.setVisible(false)
+
+project.getGradle().addListener(new DependencyResolutionListener() {
+    @Override
+    void beforeResolve(ResolvableDependencies resolvableDependencies) {
+        //此回调会多次进入，我们只需要解析一次，因此只要进入，就remove，然后执行我们的解析操作
+        project.gradle.removeListener(this)
+        project.getRepositories().each { def repository ->
+            //repository.url就是maven服务的前缀路径，可能是文件协议，也可能是http协议，或是其他协议，如ftp
+        }
+        resolvableDependencies.afterResolve {
+            println(resolvableDependencies.getName() + " app path after 3  : " + resolvableDependencies.getPath())
+            configuration.incoming.dependencies.all { Dependency dependency ->
+                FileCollection collection = configuration.fileCollection(dependency).filter {
+                    return it.name.endsWith(".aar") || it.name.endsWith(".jar")
+                }
+                println("name" + dependency.name + configuration.files.size())
+
+                //遍历过滤后的文件
+                collection.each {
+
+                    if (it.name.endsWith(".aar")) {
+                        //如果是aar，则提取里面的jar文件
+                        FileCollection jarFormAar = project.zipTree(it).filter {
+                            it.name == "classes.jar"
+                        }
+                        //将jar依赖添加到provided的scope中
+                    } else if (it.name.endsWith(".jar")) {
+                        //如果是jar则直接添加
+                        //将jar依赖添加到provided的scope中
+
+                        project.tasks.each { taskItem ->
+                            if (taskItem instanceof JavaCompile) {
+                                FileCollection classesCollection = project.zipTree(it).filter {
+                                    it.name.endsWith(".class")
+                                }
+
+                                println("1------------" + taskItem.getName() + "___________________________" + classesCollection)
+                                JavaCompile javaCompile = taskItem
+//                                javaCompile.classpath.plus(it.absoluteFile)
+
+
+                            }
+                        }
+                    }
+                }
+
+                project.tasks.each { taskItem ->
+                    if (taskItem instanceof JavaCompile) {
+
+                        println("1------------" + taskItem.getName() + "___________________________")
+                        JavaCompile javaCompile = taskItem
+                        FileCollection plusfiles = javaCompile.classpath.plus(collection)
+//                        javaCompile.setClasspath(plusfiles)
+
+                    }
+                }
+            }
+
+
+        }
+
+        println(resolvableDependencies.getName() + "app path   before : " + resolvableDependencies.getPath())
+    }
+
+    @Override
+    void afterResolve(ResolvableDependencies resolvableDependencies) {
+        println(resolvableDependencies.getName() + "app  path  after  : " + resolvableDependencies.getPath())
+    }
+})
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile gradleApi()
-    compile 'com.android.tools.build:gradle:3.1.3'
-    compile 'com.android.databinding:compilerCommon:3.2.+'
-    compile project(':bind-compiler-common')
+    provided 'com.android.tools.build:gradle:3.1.3'
+    compileOnly 'com.android.tools.build:gradle:3.1.3'
+//    compile project(':bind-compiler-common')
+    compile 'com.ytjojo.databind:bind-compiler-common:1.0.0-SNAPSHOT'
 
 }
 

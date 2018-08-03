@@ -21,12 +21,7 @@ import com.databinding.tool.ext.N
 import com.databinding.tool.ext.T
 import com.databinding.tool.ext.toTypeName
 import com.databinding.tool.store.GenClassInfoLog
-import com.squareup.javapoet.ClassName
-import com.squareup.javapoet.FieldSpec
-import com.squareup.javapoet.MethodSpec
-import com.squareup.javapoet.ParameterSpec
-import com.squareup.javapoet.TypeName
-import com.squareup.javapoet.TypeSpec
+import com.squareup.javapoet.*
 import javax.lang.model.element.Modifier
 
 class BaseLayoutBinderWriter(val model: BaseLayoutModel) {

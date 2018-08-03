@@ -1,9 +1,7 @@
 package com.ytjojo.databind.compiler.annotationprocessor;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
-import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 
 /**

@@ -13,16 +13,15 @@
 
 package com.databinding.tool.reflection;
 
+import com.databinding.tool.Context;
+import com.databinding.tool.util.L;
+import com.databinding.tool.util.Preconditions;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import com.databinding.tool.Context;
-import com.databinding.tool.util.L;
-import com.databinding.tool.util.Preconditions;
-
 
 import java.io.File;
 import java.io.InputStream;

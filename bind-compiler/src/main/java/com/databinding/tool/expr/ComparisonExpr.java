@@ -16,11 +16,11 @@
 
 package com.databinding.tool.expr;
 
+import android.support.annotation.NonNull;
+
 import com.databinding.tool.reflection.ModelAnalyzer;
 import com.databinding.tool.reflection.ModelClass;
 import com.databinding.tool.writer.KCode;
-import android.support.annotation.NonNull;
-
 
 import java.util.List;
 import java.util.Objects;

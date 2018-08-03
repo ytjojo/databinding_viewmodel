@@ -13,25 +13,22 @@
 
 package com.ytjojo.databinding.compiler.tool.store;
 
-import android.databinding.parser.XMLLexer;
-import android.databinding.parser.XMLParser;
-import android.databinding.parser.XMLParserBaseVisitor;
-import android.databinding.tool.LayoutXmlProcessor;
-import android.databinding.tool.processing.Scope;
-import android.databinding.tool.processing.scopes.FileScopeProvider;
-import android.databinding.tool.store.Location;
-import android.databinding.tool.util.L;
-import android.databinding.tool.util.ParserHelper;
-import android.databinding.tool.util.Preconditions;
-import android.databinding.tool.util.StringUtils;
-import com.google.common.base.Strings;
+import com.databinding.parser.XMLLexer;
+import com.databinding.parser.XMLParser;
+import com.databinding.parser.XMLParserBaseVisitor;
+import com.databinding.tool.processing.Scope;
+import com.databinding.tool.processing.scopes.FileScopeProvider;
+import com.databinding.tool.store.Location;
+import com.databinding.tool.util.L;
+import com.databinding.tool.util.ParserHelper;
+import com.databinding.tool.util.Preconditions;
+import com.databinding.tool.util.StringUtils;
 import com.ytjojo.databinding.compiler.tool.util.XmlEditor;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
-import org.apache.commons.io.FileUtils;
 import org.mozilla.universalchardet.UniversalDetector;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -47,14 +44,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 /**
  * Gets the list of XML files and creates a list of
@@ -124,7 +118,7 @@ public class LayoutFileParser {
     }
 
     private static boolean isProcessedElement(String name) {
-        if (Strings.isNullOrEmpty(name)) {
+        if (org.apache.commons.lang3.StringUtils.isEmpty(name)) {
             return false;
         }
         if ("view".equals(name) || "include".equals(name) || name.indexOf('.') >= 0) {
@@ -188,7 +182,7 @@ public class LayoutFileParser {
             if ("include".equals(nodeName)) {
                 // get the layout attribute
                 final String includeValue = attributes.get("layout");
-                if (Strings.isNullOrEmpty(includeValue)) {
+                if (org.apache.commons.lang3.StringUtils.isEmpty(includeValue)) {
                     L.e("%s must include a layout", parent);
                 }
                 if (!includeValue.startsWith(LAYOUT_PREFIX)) {
@@ -215,7 +209,7 @@ public class LayoutFileParser {
             }else if("ViewStub".equals(nodeName)){
                 viewName = getViewName(parent);
                 final String includeValue = attributes.get("android:layout");
-                if (Strings.isNullOrEmpty(includeValue)) {
+                if (org.apache.commons.lang3.StringUtils.isEmpty(includeValue)) {
                     L.e("%s must include a layout", parent);
                 }
                 if (!includeValue.startsWith(LAYOUT_PREFIX)) {
@@ -274,7 +268,7 @@ public class LayoutFileParser {
         String viewName = root.elmName.getText();
         if (!"merge".equals(viewName)) {
             String classNode = attributeMap(root).get("xmlns:databinding");
-            if (Strings.isNullOrEmpty(classNode)) {
+            if (org.apache.commons.lang3.StringUtils.isEmpty(classNode)) {
                return false;
             }else {
                 return true;
@@ -355,32 +349,6 @@ public class LayoutFileParser {
         return "merge".equals(rootView.elmName.getText()) && filter(rootView, "include").size() > 0;
     }
 
-    private void stripFile(File xml, File out, String encoding,
-            LayoutXmlProcessor.OriginalFileLookup originalFileLookup)
-            throws ParserConfigurationException, IOException, SAXException,
-            XPathExpressionException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(xml);
-        XPathFactory xPathFactory = XPathFactory.newInstance();
-        XPath xPath = xPathFactory.newXPath();
-        File actualFile = originalFileLookup == null ? null
-                : originalFileLookup.getOriginalFileFor(xml);
-        // TODO get rid of original file lookup
-        if (actualFile == null) {
-            actualFile = xml;
-        }
-        // always create id from actual file when available. Gradle may duplicate files.
-        String noExt = ParserHelper.stripExtension(actualFile.getName());
-        String binderId = actualFile.getParentFile().getName() + '/' + noExt;
-        // now if file has any binding expressions, find and delete them
-        boolean changed =false;//TODO;
-        if (changed) {
-            stripBindingTags(xml, out, binderId, encoding);
-        } else if (!xml.equals(out)){
-            FileUtils.copyFile(xml, out);
-        }
-    }
 
 
     private List<Node> get(Document doc, XPath xPath, String pattern)
@@ -397,14 +365,6 @@ public class LayoutFileParser {
         return result;
     }
 
-    private void stripBindingTags(File xml, File output, String newTag, String encoding) throws IOException {
-        String res = XmlEditor.strip(xml, newTag, encoding);
-        Preconditions.checkNotNull(res, "layout file should've changed %s", xml.getAbsolutePath());
-        if (res != null) {
-            L.d("file %s has changed, overwriting %s", xml.getName(), xml.getAbsolutePath());
-            FileUtils.writeStringToFile(output, res, encoding);
-        }
-    }
 
     private static String findEncoding(File f) throws IOException {
         FileInputStream fin = new FileInputStream(f);

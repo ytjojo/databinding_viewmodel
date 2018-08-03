@@ -25,7 +25,6 @@ import com.databinding.tool.util.LoggedErrorException;
 import com.databinding.tool.util.Preconditions;
 import com.databinding.tool.writer.BRWriter;
 import com.databinding.tool.writer.JavaFileWriter;
-
 import com.google.common.collect.Sets;
 
 import java.io.Serializable;
