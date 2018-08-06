@@ -15,7 +15,7 @@
  */
 package com.databinding.tool.reflection;
 
-import com.databinding.Bindable;
+import android.databinding.Bindable;
 
 import org.jetbrains.annotations.Nullable;
 

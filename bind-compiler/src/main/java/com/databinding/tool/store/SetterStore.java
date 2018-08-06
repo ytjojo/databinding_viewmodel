@@ -18,7 +18,7 @@ package com.databinding.tool.store;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.databinding.InverseBindingListener;
+import android.databinding.InverseBindingListener;
 import com.databinding.tool.Context;
 import com.databinding.tool.reflection.ModelAnalyzer;
 import com.databinding.tool.reflection.ModelClass;

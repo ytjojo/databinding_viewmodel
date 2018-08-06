@@ -13,7 +13,7 @@
 
 package com.databinding.tool;
 
-import com.databinding.BindingBuildInfo;
+import android.databinding.BindingBuildInfo;
 import com.databinding.tool.store.LayoutFileParser;
 import com.databinding.tool.store.ResourceBundle;
 import com.databinding.tool.util.Preconditions;

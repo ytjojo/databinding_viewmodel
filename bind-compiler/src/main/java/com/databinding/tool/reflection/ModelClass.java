@@ -15,7 +15,7 @@
  */
 package com.databinding.tool.reflection;
 
-import com.databinding.Bindable;
+import android.databinding.Bindable;
 import com.databinding.tool.ext.ExtKt;
 import com.databinding.tool.reflection.Callable.Type;
 import com.databinding.tool.util.L;

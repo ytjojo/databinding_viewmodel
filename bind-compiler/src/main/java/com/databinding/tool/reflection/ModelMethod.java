@@ -15,7 +15,7 @@
  */
 package com.databinding.tool.reflection;
 
-import com.databinding.Bindable;
+import android.databinding.Bindable;
 
 import java.util.Collections;
 import java.util.List;

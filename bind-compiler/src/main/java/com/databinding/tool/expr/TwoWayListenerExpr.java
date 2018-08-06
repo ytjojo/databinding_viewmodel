@@ -15,7 +15,7 @@
  */
 package com.databinding.tool.expr;
 
-import com.databinding.InverseBindingListener;
+import android.databinding.InverseBindingListener;
 import com.databinding.tool.InverseBinding;
 import com.databinding.tool.reflection.ModelAnalyzer;
 import com.databinding.tool.reflection.ModelClass;

@@ -22,13 +22,13 @@ import com.databinding.tool.util.L;
 import com.databinding.tool.writer.JavaFileWriter;
 import com.ytjojo.databinding.compiler.tool.LayoutXmlProcessor;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.logging.Logger;
-import org.gradle.internal.impldep.org.apache.commons.lang.StringUtils;
-import org.gradle.internal.impldep.org.apache.commons.lang.exception.ExceptionUtils;
 import org.xml.sax.SAXException;
 
 import java.io.File;
@@ -49,6 +49,20 @@ public class BindingPlugin implements Plugin<Project> {
     private Logger logger;
     @Override
     public void apply(Project project) {
+        logger = project.getLogger();
+        project.afterEvaluate(new Action<Project>() {
+            @Override
+            public void execute(Project project) {
+                try {
+                    createXmlProcessor(project);
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
     }
 
@@ -90,10 +104,10 @@ public class BindingPlugin implements Plugin<Project> {
             throws NoSuchFieldException, IllegalAccessException {
         L.d("create xml processor for " + appExt);
         File sdkDir = appExt.getSdkDirectory();
-        for (TestVariant testVariant : appExt.getTestVariants()) {
-            TestVariantData variantData = getVariantData(testVariant);
-            attachXmlProcessor(project, variantData, sdkDir, false,testVariant);
-        }
+//        for (TestVariant testVariant : appExt.getTestVariants()) {
+//            TestVariantData variantData = getVariantData(testVariant);
+//            attachXmlProcessor(project, variantData, sdkDir, false,testVariant);
+//        }
         for (ApplicationVariant appVariant : appExt.getApplicationVariants()) {
             ApplicationVariantData variantData = getVariantData(appVariant);
             attachXmlProcessor(project, variantData, sdkDir, false,appVariant);
@@ -128,11 +142,9 @@ public class BindingPlugin implements Plugin<Project> {
                                     final Boolean isLibrary,BaseVariant variant) {
         final GradleVariantConfiguration configuration = variantData.getVariantConfiguration();
         String applicationId = configuration.getApplicationId();
-        final int apiLevel = configuration.getMinSdkVersion().getApiLevel();
 
 
         final String packageName  = getPackageName(variant);
-        String fullName = configuration.getFullName();
         List<File> resourceFolders = Arrays.asList(variantData.mergeResourcesTask.getOutputDir());
 
         final File codeGenTargetFolder = new File(project.getBuildDir() + "/data-binding-info/" +
@@ -150,7 +162,7 @@ public class BindingPlugin implements Plugin<Project> {
             }
         };
         final LayoutXmlProcessor xmlProcessor = new LayoutXmlProcessor(packageName, resourceFolders,
-                fileWriter,apiLevel, isLibrary);
+                fileWriter,14, isLibrary);
         final MergeResources processResTask =  variantData.mergeResourcesTask;;
         final File xmlOutDir = new File(project.getBuildDir() + "/layout-info/" +
                 configuration.getDirName());

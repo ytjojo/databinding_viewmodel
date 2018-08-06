@@ -15,15 +15,15 @@
  */
 package com.databinding.annotationprocessor;
 
-import com.databinding.BindingAdapter;
-import com.databinding.BindingConversion;
-import com.databinding.BindingMethod;
-import com.databinding.BindingMethods;
-import com.databinding.InverseBindingAdapter;
-import com.databinding.InverseBindingMethod;
-import com.databinding.InverseBindingMethods;
-import com.databinding.InverseMethod;
-import com.databinding.Untaggable;
+import android.databinding.BindingAdapter;
+import android.databinding.BindingConversion;
+import android.databinding.BindingMethod;
+import android.databinding.BindingMethods;
+import android.databinding.InverseBindingAdapter;
+import android.databinding.InverseBindingMethod;
+import android.databinding.InverseBindingMethods;
+import android.databinding.InverseMethod;
+import android.databinding.Untaggable;
 import com.databinding.tool.DataBindingCompilerArgs;
 import com.databinding.tool.reflection.ModelAnalyzer;
 import com.databinding.tool.reflection.annotation.AnnotationTypeUtil;

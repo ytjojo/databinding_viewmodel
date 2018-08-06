@@ -16,7 +16,7 @@
 
 package com.databinding.annotationprocessor;
 
-import com.databinding.Bindable;
+import android.databinding.Bindable;
 import com.databinding.tool.CompilerChef.BindableHolder;
 import com.databinding.tool.DataBindingCompilerArgs;
 import com.databinding.tool.util.GenerationalClassUtil;

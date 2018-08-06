@@ -16,7 +16,7 @@
 
 package com.databinding.annotationprocessor;
 
-import com.databinding.BindingBuildInfo;
+import android.databinding.BindingBuildInfo;
 import com.databinding.tool.processing.ScopedException;
 import com.databinding.tool.util.L;
 import com.databinding.tool.util.Preconditions;
@@ -28,16 +28,16 @@ import javax.lang.model.element.Element;
 
 public class BuildInfoUtil {
     private static BindingBuildInfo sCached;
-    public static BindingBuildInfo load(RoundEnvironment roundEnvironment) {
-        if (sCached == null) {
-            sCached = extractNotNull(roundEnvironment, BindingBuildInfo.class);
-            if (sCached != null) {
-                L.setDebugLog(sCached.enableDebugLogs());
-                ScopedException.encodeOutput(sCached.printEncodedError());
-            }
-        }
-        return sCached;
-    }
+//    public static BindingBuildInfo load(RoundEnvironment roundEnvironment) {
+//        if (sCached == null) {
+//            sCached = extractNotNull(roundEnvironment, BindingBuildInfo.class);
+//            if (sCached != null) {
+//                L.setDebugLog(sCached.enableDebugLogs());
+//                ScopedException.encodeOutput(sCached.printEncodedError());
+//            }
+//        }
+//        return sCached;
+//    }
 
     private static <T extends Annotation> T extractNotNull(RoundEnvironment roundEnv,
             Class<T> annotationClass) {

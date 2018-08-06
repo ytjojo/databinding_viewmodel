@@ -15,7 +15,7 @@
  */
 package com.databinding.tool.reflection;
 
-import com.databinding.Bindable;
+import android.databinding.Bindable;
 
 public abstract class ModelField {
 

@@ -15,7 +15,7 @@
  */
 package com.databinding.tool.reflection.annotation;
 
-import com.databinding.Bindable;
+import android.databinding.Bindable;
 import com.databinding.tool.reflection.ModelClass;
 import com.databinding.tool.reflection.ModelMethod;
 import com.databinding.tool.reflection.SdkUtil;
