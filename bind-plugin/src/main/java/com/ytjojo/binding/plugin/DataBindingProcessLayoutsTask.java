@@ -33,7 +33,7 @@ public class DataBindingProcessLayoutsTask extends DefaultTask {
     public void processResources()
             throws ParserConfigurationException, SAXException, XPathExpressionException,
             IOException {
-        L.d("running process layouts task %s", getName());
+        Log.i("running process layouts task %s", getName());
         xmlProcessor.processResources();
         Scope.assertNoError();
     }

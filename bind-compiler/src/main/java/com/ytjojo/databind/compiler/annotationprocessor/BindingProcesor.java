@@ -47,6 +47,8 @@ public class BindingProcesor extends AbstractProcessor {
     public static  Elements sElements;
 
     Element bindingViewModleElement;
+
+    public static String layoutInfoDir;
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
 
@@ -80,7 +82,12 @@ public class BindingProcesor extends AbstractProcessor {
         sElements = processingEnv.getElementUtils();      // Get class meta.
         Logger.init(processingEnvironment.getMessager());
 
+        layoutInfoDir =processingEnv.getOptions().get("GradleVariantConfiguration_DirName");
+        Logger.get().warning("dirName    "+layoutInfoDir);
+        if(layoutInfoDir ==null){
 
+//            throw new IllegalArgumentException();
+        }
         bindingViewModleElement = processingEnvironment.getElementUtils().getTypeElement("com.ytjojo.databind.annotation.BindingViewModel");
 
     }

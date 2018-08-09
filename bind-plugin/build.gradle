@@ -130,7 +130,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile gradleApi()
     provided 'com.android.tools.build:gradle:3.1.3'
-    compileOnly 'com.android.tools.build:gradle:3.1.3'
+    compileOnly 'com.android.tools.build:gradle:2.3.3'
 //    compile project(':bind-compiler-common')
     compile 'com.ytjojo.databind:bind-compiler-common:1.0.0-SNAPSHOT'
 

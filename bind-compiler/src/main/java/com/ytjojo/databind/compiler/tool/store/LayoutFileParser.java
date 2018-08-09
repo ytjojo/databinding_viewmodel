@@ -66,7 +66,7 @@ public class LayoutFileParser {
     private static final String XPATH_BINDING_LAYOUT = "/layout";
 
     private static final String LAYOUT_PREFIX = "@layout/";
-    private static final String XMLNS_SCHEME="http://schemas.databinding.com/bindattr";
+    private static final String XMLNS_SCHEME="http://schemas.databinding.com/binding_attr";
     public static final String XMLNS_NAMESPACE= "databinding";
 
     public static final String BINDING_ATTR_PREFIX= "databinding:bind_";

@@ -27,14 +27,15 @@ buildscript {
 
 allprojects {
     repositories {
-        maven {
-            url "http://60.191.3.210:9081/repository/android-maven-public/"
-        }
+
         maven{
             url rootProject.file('./maven')
         }
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         jcenter()
+        maven {
+            url "http://60.191.3.210:9081/repository/android-maven-public/"
+        }
 
     }
 //    buildscript{

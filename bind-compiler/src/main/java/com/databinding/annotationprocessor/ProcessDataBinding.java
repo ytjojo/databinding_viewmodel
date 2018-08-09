@@ -39,24 +39,14 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 import javax.xml.bind.JAXBException;
 
-//@SupportedAnnotationTypes({
-//        "BindingAdapter",
-//        "InverseBindingMethods",
-//        "InverseBindingAdapter",
-//        "InverseMethod",
-//        "Untaggable",
-//        "BindingMethods",
-//        "BindingConversion",
-//        "BindingBuildInfo"}
-//)
 /**
  * Parent annotation processor that dispatches sub steps to ensure execution order.
  * Use initProcessingSteps to add a new step.
  */
-public class ProcessDataBinding extends AbstractProcessor {
+public class ProcessDataBinding {
     private List<ProcessingStep> mProcessingSteps;
     private DataBindingCompilerArgs mCompilerArgs;
-    @Override
+    protected ProcessingEnvironment processingEnv;
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         try {
             return doProcess(roundEnv);
@@ -100,7 +90,6 @@ public class ProcessDataBinding extends AbstractProcessor {
         return done;
     }
 
-    @Override
     public SourceVersion getSupportedSourceVersion() {
         return SourceVersion.latest();
     }
@@ -174,7 +163,6 @@ public class ProcessDataBinding extends AbstractProcessor {
         }
     }
 
-    @Override
     public Set<String> getSupportedOptions() {
         return DataBindingCompilerArgs.ALL_PARAMS;
     }
