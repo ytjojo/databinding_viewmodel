@@ -63,16 +63,6 @@ public class BindingProcesor extends AbstractProcessor {
 
         return false;
     }
-    private List<ProcessExpressions.IntermediateV2> loadDependencyIntermediates() {
-        final List<ProcessExpressions.Intermediate> original = GenerationalClassUtil.get().loadObjects(
-                GenerationalClassUtil.ExtensionFilter.LAYOUT);
-        final List<ProcessExpressions.IntermediateV2> upgraded = new ArrayList<ProcessExpressions.IntermediateV2>(original.size());
-        for (ProcessExpressions.Intermediate intermediate : original) {
-            final ProcessExpressions.Intermediate updatedIntermediate = intermediate.upgrade();
-            upgraded.add((ProcessExpressions.IntermediateV2) updatedIntermediate);
-        }
-        return upgraded;
-    }
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
@@ -92,30 +82,6 @@ public class BindingProcesor extends AbstractProcessor {
 
     }
 
-    private ProcessExpressions.IntermediateV2 createIntermediateFromLayouts(String layoutInfoFolderPath,
-                                                                            List<ProcessExpressions.IntermediateV2> intermediateList) {
-        final Set<String> excludeList = new HashSet<String>();
-        for (ProcessExpressions.IntermediateV2 lib : intermediateList) {
-            excludeList.addAll(Utils.get(lib));
-        }
-        final File layoutInfoFolder = new File(layoutInfoFolderPath);
-        if (!layoutInfoFolder.isDirectory()) {
-            return null;
-        }
-        ProcessExpressions.IntermediateV2 result = new ProcessExpressions.IntermediateV2();
-        for (File layoutFile : layoutInfoFolder.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".xml") && !excludeList.contains(name);
-            }
-        })) {
-            try {
-                result.addEntry(layoutFile.getName(), FileUtils.readFileToString(layoutFile));
-            } catch (IOException e) {
-            }
-        }
-        return result;
-    }
 
     @Override
     public SourceVersion getSupportedSourceVersion() {
