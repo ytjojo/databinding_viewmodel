@@ -30,7 +30,7 @@ import java.lang.ref.WeakReference;
  * Created by jiulongteng on 2018/8/7.
  */
 
-public abstract class BaseViewBinding {
+public abstract class BaseViewDataBinding {
 
     static int SDK_INT = Build.VERSION.SDK_INT;
     private static final int REBIND = 1;
@@ -43,7 +43,7 @@ public abstract class BaseViewBinding {
 
     private static final CreateWeakListener CREATE_LIVE_DATA_LISTENER = new CreateWeakListener() {
         @Override
-        public WeakListener create(BaseViewBinding viewDataBinding, int localFieldId) {
+        public WeakListener create(BaseViewDataBinding viewDataBinding, int localFieldId) {
             return new LiveDataListener(viewDataBinding, localFieldId).getListener();
         }
     };
@@ -57,7 +57,7 @@ public abstract class BaseViewBinding {
         mBindingRootView = layoutInflater.inflate(layout, parent);
     }
 
-    public BaseViewBinding() {
+    public BaseViewDataBinding() {
         mLocalFieldObservers = new WeakListener[getLocalFieldCount()];
         if (USE_CHOREOGRAPHER) {
             mChoreographer = Choreographer.getInstance();
@@ -94,7 +94,7 @@ public abstract class BaseViewBinding {
     /**
      * The collection of OnRebindCallbacks.
      */
-    private CallbackRegistry<OnRebindCallback, BaseViewBinding, Void> mRebindCallbacks;
+    private CallbackRegistry<OnRebindCallback, BaseViewDataBinding, Void> mRebindCallbacks;
 
     /**
      * Flag to prevent reentrant executePendingBinding calls.
@@ -114,17 +114,17 @@ public abstract class BaseViewBinding {
      * that contains this. mContainingBinding is used to order executeBindings -- containing
      * bindings should execute prior to included bindings.
      */
-    private BaseViewBinding mContainingBinding;
+    private BaseViewDataBinding mContainingBinding;
 
     /**
      * The observed expressions.
      */
     private WeakListener[] mLocalFieldObservers;
 
-    private static final CallbackRegistry.NotifierCallback<OnRebindCallback, BaseViewBinding, Void>
-            REBIND_NOTIFIER = new CallbackRegistry.NotifierCallback<OnRebindCallback, BaseViewBinding, Void>() {
+    private static final CallbackRegistry.NotifierCallback<OnRebindCallback, BaseViewDataBinding, Void>
+            REBIND_NOTIFIER = new CallbackRegistry.NotifierCallback<OnRebindCallback, BaseViewDataBinding, Void>() {
         @Override
-        public void onNotifyCallback(OnRebindCallback callback, BaseViewBinding sender, int mode,
+        public void onNotifyCallback(OnRebindCallback callback, BaseViewDataBinding sender, int mode,
                                      Void arg2) {
             switch (mode) {
                 case REBIND:
@@ -142,7 +142,7 @@ public abstract class BaseViewBinding {
         }
     };
 
-    private static final ReferenceQueue<BaseViewBinding> sReferenceQueue = new ReferenceQueue<>();
+    private static final ReferenceQueue<BaseViewDataBinding> sReferenceQueue = new ReferenceQueue<>();
 
 
     private static final View.OnAttachStateChangeListener ROOT_REATTACHED_LISTENER;
@@ -156,7 +156,7 @@ public abstract class BaseViewBinding {
                 @Override
                 public void onViewAttachedToWindow(View v) {
                     // execute the pending bindings.
-                    final BaseViewBinding binding = getBinding(v);
+                    final BaseViewDataBinding binding = getBinding(v);
                     binding.mRebindRunnable.run();
                     v.removeOnAttachStateChangeListener(this);
                 }
@@ -250,7 +250,7 @@ public abstract class BaseViewBinding {
      */
     public void addOnRebindCallback(@NonNull OnRebindCallback listener) {
         if (mRebindCallbacks == null) {
-            mRebindCallbacks = new CallbackRegistry<OnRebindCallback, BaseViewBinding, Void>(REBIND_NOTIFIER);
+            mRebindCallbacks = new CallbackRegistry<OnRebindCallback, BaseViewDataBinding, Void>(REBIND_NOTIFIER);
         }
         mRebindCallbacks.add(listener);
     }
@@ -415,7 +415,7 @@ public abstract class BaseViewBinding {
      *
      * @hide
      */
-    protected static void executeBindingsOn(BaseViewBinding other) {
+    protected static void executeBindingsOn(BaseViewDataBinding other) {
         other.executeBindingsInternal();
     }
 
@@ -425,9 +425,9 @@ public abstract class BaseViewBinding {
     }
 
 
-    static BaseViewBinding getBinding(View v) {
+    static BaseViewDataBinding getBinding(View v) {
         if (v != null) {
-            return (BaseViewBinding) v.getTag(R.id.baseviewbinding);
+            return (BaseViewDataBinding) v.getTag(R.id.baseviewbinding);
         }
         return null;
     }
@@ -465,7 +465,7 @@ public abstract class BaseViewBinding {
      * Polls sReferenceQueue to remove listeners on ViewDataBindings that have been collected.
      */
     private static void processReferenceQueue() {
-        Reference<? extends BaseViewBinding> ref;
+        Reference<? extends BaseViewDataBinding> ref;
         while ((ref = sReferenceQueue.poll()) != null) {
             if (ref instanceof WeakListener) {
                 WeakListener listener = (WeakListener) ref;
@@ -484,12 +484,12 @@ public abstract class BaseViewBinding {
         void setLifecycleOwner(LifecycleOwner lifecycleOwner);
     }
 
-    private static class WeakListener<T> extends WeakReference<BaseViewBinding> {
+    private static class WeakListener<T> extends WeakReference<BaseViewDataBinding> {
         private final ObservableReference<T> mObservable;
         protected final int mLocalFieldId;
         private T mTarget;
 
-        public WeakListener(BaseViewBinding binder, int localFieldId,
+        public WeakListener(BaseViewDataBinding binder, int localFieldId,
                             ObservableReference<T> observable) {
             super(binder, sReferenceQueue);
             mLocalFieldId = localFieldId;
@@ -522,8 +522,8 @@ public abstract class BaseViewBinding {
             return mTarget;
         }
 
-        protected BaseViewBinding getBinder() {
-            BaseViewBinding binder = get();
+        protected BaseViewDataBinding getBinder() {
+            BaseViewDataBinding binder = get();
             if (binder == null) {
                 unregister(); // The binder is dead
             }
@@ -537,7 +537,7 @@ public abstract class BaseViewBinding {
         final WeakListener<LiveData<?>> mListener;
         LifecycleOwner mLifecycleOwner;
 
-        public LiveDataListener(BaseViewBinding binder, int localFieldId) {
+        public LiveDataListener(BaseViewDataBinding binder, int localFieldId) {
             mListener = new WeakListener(binder, localFieldId, this);
         }
 
@@ -575,12 +575,12 @@ public abstract class BaseViewBinding {
 
         @Override
         public void onChanged(@Nullable Object o) {
-            BaseViewBinding binder = mListener.getBinder();
+            BaseViewDataBinding binder = mListener.getBinder();
             binder.handleFieldChange(mListener.mLocalFieldId, mListener.getTarget());
         }
     }
     private interface CreateWeakListener {
-        WeakListener create(BaseViewBinding viewDataBinding, int localFieldId);
+        WeakListener create(BaseViewDataBinding viewDataBinding, int localFieldId);
     }
 
     /**
@@ -599,5 +599,46 @@ public abstract class BaseViewBinding {
         }
     }
 
+
+
+    /** @hide */
+    protected static int safeUnbox(java.lang.Integer boxed) {
+        return boxed == null ? 0 : (int)boxed;
+    }
+
+    /** @hide */
+    protected static long safeUnbox(java.lang.Long boxed) {
+        return boxed == null ? 0L : (long)boxed;
+    }
+
+    /** @hide */
+    protected static short safeUnbox(java.lang.Short boxed) {
+        return boxed == null ? 0 : (short)boxed;
+    }
+
+    /** @hide */
+    protected static byte safeUnbox(java.lang.Byte boxed) {
+        return boxed == null ? 0 : (byte)boxed;
+    }
+
+    /** @hide */
+    protected static char safeUnbox(java.lang.Character boxed) {
+        return boxed == null ? '\u0000' : (char)boxed;
+    }
+
+    /** @hide */
+    protected static double safeUnbox(java.lang.Double boxed) {
+        return boxed == null ? 0.0 : (double)boxed;
+    }
+
+    /** @hide */
+    protected static float safeUnbox(java.lang.Float boxed) {
+        return boxed == null ? 0f : (float)boxed;
+    }
+
+    /** @hide */
+    protected static boolean safeUnbox(java.lang.Boolean boxed) {
+        return boxed == null ? false : (boolean)boxed;
+    }
 
 }

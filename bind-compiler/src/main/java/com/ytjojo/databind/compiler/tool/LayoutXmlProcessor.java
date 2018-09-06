@@ -54,37 +54,29 @@ public class LayoutXmlProcessor {
 
     public static List<File> getLayoutFiles(List<File> resources) {
         List<File> result = new ArrayList();
-        Iterator i$ = resources.iterator();
 
-        while(true) {
-            while(true) {
-                File resource;
-                do {
-                    do {
-                        if (!i$.hasNext()) {
-                            return result;
-                        }
-                    } while(!(resource = (File)i$.next()).exists());
-                } while(!resource.canRead());
-
-                if (resource.isDirectory()) {
-                    File[] arr$;
-                    int len$ = (arr$ = resource.listFiles(layoutFolderFilter)).length;
-
-                    for(int i = 0; i < len$; ++i) {
-
-                        int len = (arr$ = arr$[i].listFiles(xmlFileFilter)).length;
-
-                        for(int j = 0; j < len; ++j) {
-                            File xmlFile = arr$[j];
-                            result.add(xmlFile);
+        for( File file : resources){
+            if(!file.exists()){
+                continue;
+            }
+            if(file.isDirectory()){
+                File[] files = file.listFiles(layoutFolderFilter);
+                if(files != null && files.length >0){
+                    for(File dir: files){
+                       File[] xmlFiles = dir.listFiles(xmlFileFilter);
+                        for(File layoutFile: xmlFiles){
+                            result.add(layoutFile);
                         }
                     }
-                } else if (xmlFileFilter.accept(resource.getParentFile(), resource.getName())) {
-                    result.add(resource);
                 }
+            }else {
+                if(xmlFileFilter.accept(file.getParentFile(), file.getName())){
+                    result.add(file);
+                }
+
             }
         }
+        return result;
     }
 
     public ResourceBundle getResourceBundle() {
@@ -151,15 +143,18 @@ public class LayoutXmlProcessor {
 
     public String generateExportFileName(ResourceBundle.LayoutFileBundle layout) {
         StringBuilder name;
-        (name = new StringBuilder(layout.getFileName())).append('-').append(layout.getDirectory());
+//        (name = new StringBuilder(layout.getFileName())).append('-').append(layout.getDirectory());
+//
+//        for(int i = name.length() - 1; i >= 0; --i) {
+//            if (name.charAt(i) == '-') {
+//                name.deleteCharAt(i);
+//                char c = Character.toUpperCase(name.charAt(i));
+//                name.setCharAt(i, c);
+//            }
+//        }
 
-        for(int i = name.length() - 1; i >= 0; --i) {
-            if (name.charAt(i) == '-') {
-                name.deleteCharAt(i);
-                char c = Character.toUpperCase(name.charAt(i));
-                name.setCharAt(i, c);
-            }
-        }
+        name = new StringBuilder(layout.getFileName());
+
 
         return name.toString();
     }

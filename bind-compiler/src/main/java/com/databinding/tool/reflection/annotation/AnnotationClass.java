@@ -257,7 +257,7 @@ class AnnotationClass extends ModelClass {
     @Override
     public boolean isInterface() {
         return mTypeMirror.getKind() == TypeKind.DECLARED &&
-                ((DeclaredType)mTypeMirror).asElement().getKind() == ElementKind.INTERFACE;
+                ((DeclaredType) mTypeMirror).asElement().getKind() == ElementKind.INTERFACE;
     }
 
     @Override

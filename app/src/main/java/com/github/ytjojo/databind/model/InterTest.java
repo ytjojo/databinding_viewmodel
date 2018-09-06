@@ -9,6 +9,6 @@ import com.ytjojo.databind.annotation.BindingViewModel;
 
 public interface InterTest {
 
-    @BindingViewModel(layoutId = R.layout.layout_bind_info,bindModelClassName = "com.github.ytjojo.databind.modelTest", generateClassName = "TestBinding")
+    @BindingViewModel(layoutId = R.layout.layout_bind_info,bindModelClass = Test.class, generateClassName = "TestBinding")
      void ss();
 }

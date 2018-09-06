@@ -121,7 +121,7 @@ public class BindingPlugin implements Plugin<Project> {
             AndroidJavaCompile task = (AndroidJavaCompile) variant.getJavaCompiler();
 
             addArgs(project,task,variantData);
-            attachXmlProcessor(project, variantData, sdkDir, true,variant,getOptionArgs(variantData));
+            attachXmlProcessor(project, variantData, sdkDir, true,variant,task);
         }
     }
 
@@ -140,7 +140,7 @@ public class BindingPlugin implements Plugin<Project> {
 
             addArgs(project,task,variantData);
 
-            attachXmlProcessor(project, variantData, sdkDir, false,appVariant,getOptionArgs(variantData));
+            attachXmlProcessor(project, variantData, sdkDir, false,appVariant,task);
         }
     }
     private void addArgs(Project project,AndroidJavaCompile task,BaseVariantData variantData){
@@ -204,7 +204,7 @@ public class BindingPlugin implements Plugin<Project> {
     private void attachXmlProcessor(Project project, final BaseVariantData variantData,
                                     final File sdkDir,
                                     final Boolean isLibrary,BaseVariant variant
-    ,Map<String,String> optionArgs) {
+    ,AndroidJavaCompile javaCompile) {
         final GradleVariantConfiguration configuration = variantData.getVariantConfiguration();
         String applicationId = configuration.getApplicationId();
 
@@ -230,9 +230,11 @@ public class BindingPlugin implements Plugin<Project> {
         final MergeResources processResTask =  variantData.mergeResourcesTask;;
         final File xmlOutDir = new File(project.getBuildDir() + "/layout-info/" +
                 configuration.getDirName());
-        optionArgs.put("GradleVariantConfiguration_DirName",xmlOutDir.getAbsolutePath());
+        javaCompile.getOptions().getCompilerArgs().add("-Abinding_modulePackage="+packageName);
+
         String layoutTaskName = "dataBindingLayouts" + StringUtils
                 .capitalize(processResTask.getName());
+
 
         final DataBindingProcessLayoutsTask[] processLayoutsTasks
                 = new DataBindingProcessLayoutsTask[1];

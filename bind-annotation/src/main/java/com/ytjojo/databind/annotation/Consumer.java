@@ -14,6 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME) // this is necessary for java analyzer to work
 public @interface Consumer {
 
-    int[] value();
+    int[] value() default {};
     String attribute() default "";
+    int twoWayId() default -1;
 }

@@ -10,9 +10,9 @@ import com.ytjojo.databind.annotation.Consumer;
 @BindingViewModel(layoutId = R.layout.layout_bind_info, generateClassName = "InfoBinding")
 public class Info extends Itemparent{
 
-    @Consumer(value = {R.id.tv_name})
+    @Consumer(value = {R.id.tv_name,R.id.tv_name1})
     public String name;
-    @Consumer(value = {R.id.tv_type})
+    @Consumer(value = {R.id.tv_type},twoWayId = R.id.tv_type)
     private  String type;
 
     public InfoItem item;
@@ -22,5 +22,7 @@ public class Info extends Itemparent{
     public String getTitle(){
         return "ssssss";
     }
+
+
 
 }

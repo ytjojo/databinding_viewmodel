@@ -4,6 +4,7 @@ import com.databinding.annotationprocessor.ProcessExpressions;
 import com.databinding.annotationprocessor.Utils;
 import com.databinding.tool.util.GenerationalClassUtil;
 import com.google.auto.service.AutoService;
+import com.ytjojo.databind.compiler.tool.store.ResourceBundle;
 import com.ytjojo.databind.compiler.tool.util.Logger;
 
 import org.apache.commons.io.FileUtils;
@@ -27,6 +28,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
+import javax.xml.bind.JAXBException;
 
 /**
  * Created by jiulongteng on 2018/7/17.
@@ -49,19 +51,15 @@ public class BindingProcesor extends AbstractProcessor {
     Element bindingViewModleElement;
 
     public static String layoutInfoDir;
+    public static String modulePackage;
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
 
-//        BindingBuildInfo buildInfo =  BuildInfoUtil.load(roundEnvironment);
-        Logger.get().warning("+++++++++++++++++++++++++++");
         if (roundEnvironment.processingOver()) {
             return false;
         }
-        new FieldProcessor().process(roundEnvironment);
+        return new FieldProcessor().process(roundEnvironment,layoutInfoDir);
 
-
-
-        return false;
     }
 
     @Override
@@ -73,11 +71,9 @@ public class BindingProcesor extends AbstractProcessor {
         Logger.init(processingEnvironment.getMessager());
 
         layoutInfoDir =processingEnv.getOptions().get("GradleVariantConfiguration_DirName");
+        modulePackage = processingEnvironment.getOptions().get("binding_modulePackage");
         Logger.get().warning("dirName    "+layoutInfoDir);
-        if(layoutInfoDir ==null){
 
-//            throw new IllegalArgumentException();
-        }
         bindingViewModleElement = processingEnvironment.getElementUtils().getTypeElement("com.ytjojo.databind.annotation.BindingViewModel");
 
     }
@@ -85,6 +81,6 @@ public class BindingProcesor extends AbstractProcessor {
 
     @Override
     public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.RELEASE_7;
+        return SourceVersion.latestSupported();
     }
 }

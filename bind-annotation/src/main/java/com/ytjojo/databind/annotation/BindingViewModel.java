@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BindingViewModel {
     int layoutId();
-    String bindModelClassName() default "";
+    Class bindModelClass() default Object.class;
     String generateClassName() default "";
 
     public String[] livedataProperties() default { };

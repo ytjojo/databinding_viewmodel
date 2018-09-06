@@ -4,7 +4,9 @@ import android.databinding.tool.processing.Scope;
 import android.databinding.tool.util.L;
 
 import com.ytjojo.databinding.compiler.tool.LayoutXmlProcessor;
+import com.ytjojo.databinding.compiler.tool.util.Logger;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
 import org.xml.sax.SAXException;
@@ -35,6 +37,13 @@ public class DataBindingProcessLayoutsTask extends DefaultTask {
             IOException {
         Log.i("running process layouts task %s", getName());
         xmlProcessor.processResources();
+        try {
+            writeLayoutXmls();
+        } catch (JAXBException e) {
+            // gradle sometimes fails to resolve JAXBException.
+            // We get stack trace manually to ensure we have the log
+            Logger.get().error( "cannot write layout xmls");
+        }
         Scope.assertNoError();
     }
 

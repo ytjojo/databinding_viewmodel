@@ -1,8 +1,7 @@
 package com.ytjojo.databind.compiler.annotationprocessor;
 
-import com.databinding.annotationprocessor.ProcessExpressions;
-import com.databinding.tool.store.ResourceBundle;
 import com.databinding.tool.util.L;
+import com.ytjojo.databind.compiler.tool.store.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -86,5 +85,9 @@ public class Intermediate implements Serializable {
         ResourceBundle resourceBundle;
         resourceBundle = new ResourceBundle(modulePackage);
         return resourceBundle;
+    }
+
+    public boolean isLayoutInfoEmpty(){
+        return mLayoutInfoMap.isEmpty();
     }
 }

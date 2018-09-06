@@ -1,11 +1,11 @@
 package com.ytjojo.databind;
 
 /**
- * Listener set on {@link BaseViewBinding#addOnRebindCallback(OnRebindCallback)} that
+ * Listener set on {@link BaseViewDataBinding#addOnRebindCallback(OnRebindCallback)} that
  * is called when bound values must be reevaluated in {@link
- * BaseViewBinding#executePendingBindings()}.
+ * BaseViewDataBinding#executePendingBindings()}.
  */
-public abstract class OnRebindCallback<T extends BaseViewBinding> {
+public abstract class OnRebindCallback<T extends BaseViewDataBinding> {
 
     /**
      * Called when values in a ViewDataBinding should be reevaluated. This does not
@@ -15,7 +15,7 @@ public abstract class OnRebindCallback<T extends BaseViewBinding> {
      * Return true to allow the reevaluation to happen or false if the reevaluation
      * should be stopped. If false is returned, it is the responsibility of the
      * OnRebindListener implementer to explicitly call {@link
-     * BaseViewBinding#executePendingBindings()}.
+     * BaseViewDataBinding#executePendingBindings()}.
      * <p>
      * The default implementation only returns <code>true</code>.
      *
@@ -28,7 +28,7 @@ public abstract class OnRebindCallback<T extends BaseViewBinding> {
     }
 
     /**
-     * Called after all callbacks have completed {@link #onPreBind(BaseViewBinding)} when
+     * Called after all callbacks have completed {@link #onPreBind(BaseViewDataBinding)} when
      * one or more of the calls has returned <code>false</code>.
      * <p>
      * The default implementation does nothing.
@@ -40,8 +40,8 @@ public abstract class OnRebindCallback<T extends BaseViewBinding> {
 
     /**
      * Called after values have been reevaluated in {@link
-     * BaseViewBinding#executePendingBindings()}. This is only called if all listeners have
-     * returned true from {@link #onPreBind(BaseViewBinding)}.
+     * BaseViewDataBinding#executePendingBindings()}. This is only called if all listeners have
+     * returned true from {@link #onPreBind(BaseViewDataBinding)}.
      * <p>
      * The default implementation does nothing.
      *
