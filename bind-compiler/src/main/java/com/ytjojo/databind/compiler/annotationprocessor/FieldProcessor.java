@@ -133,7 +133,7 @@ public class FieldProcessor {
                     Binding binding = new Binding();
                     binding.methodHolder = methodHolder;
                     binding.bindingKey = consumer.attribute();
-                    bindingHolder.mAllBinding.add(binding);
+                    bindingHolder.addBinding(binding);
                 }
 
             }
@@ -195,12 +195,12 @@ public class FieldProcessor {
                     Binding binding = new Binding();
                     binding.fieldHolder = fieldHolder;
                     binding.bindingKey = consumer.attribute();
-                    bindingHolder.mAllBinding.add(binding);
+                    bindingHolder.addBinding(binding);
                 }
                 if (consumer.twoWayId() > 0) {
                     InverseBinding inverseBinding = new InverseBinding();
                     inverseBinding.fieldHolder = fieldHolder;
-                    bindingHolder.mAllInversBinding.add(inverseBinding);
+                    bindingHolder.addInverseBinding(inverseBinding);
                     inverseBinding.bindingKey = consumer.attribute();
                 }
             }
@@ -246,7 +246,7 @@ public class FieldProcessor {
                         MemberValuePair pair = memberIt.next();
 
                         if (pair.getName().getIdentifier().equals("layoutId")) {
-                            bindingHolder.layoutId = pair.getValue().toString();
+                            bindingHolder.layoutId = pair.getValue().toString().split("\\.")[2];
                         }
                     }
                     List<MethodDeclaration> methodNodeList = typeDeclaration.getMethods();

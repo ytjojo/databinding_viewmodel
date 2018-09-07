@@ -13,6 +13,7 @@
 
 package com.ytjojo.databind.compiler.tool.store;
 
+import com.databinding.tool.ext.ExtKt;
 import com.databinding.tool.processing.ErrorMessages;
 import com.databinding.tool.processing.Scope;
 import com.databinding.tool.processing.ScopedException;
@@ -546,7 +547,11 @@ public class ResourceBundle implements Serializable {
 
         public BindingTargetBundle(String id, String viewName, boolean used,Location location
         ) {
-            mId = id;
+            if(id == null){
+                mId = id;
+            }else {
+                mId = ExtKt.androidId(id);
+            }
             mViewName = viewName;
             mUsed = used;
             mLocation = location;

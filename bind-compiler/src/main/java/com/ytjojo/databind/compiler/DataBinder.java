@@ -29,7 +29,7 @@ public class DataBinder {
         HashMap<String,BindingHolder> bindingHolderHashMap = new HashMap<>();
         for(BindingHolder holder: mAllBindingHolders){
 
-            String layoutId= holder.layoutId.split("\\.")[2];
+            String layoutId= holder.layoutId;
             if(bindingHolderHashMap.containsKey(layoutId)){
                 L.e("dumplicate model define @BindingViewModel in ",holder.modelTypeElement.getQualifiedName());
             }
@@ -43,6 +43,8 @@ public class DataBinder {
                     continue;
                 }
                 bindingHolder.setLayoutFileBundle(bundle);
+                bindingHolder.init();
+
             } catch (ScopedException ex) {
                 Scope.defer(ex);
             }

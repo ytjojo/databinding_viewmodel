@@ -111,6 +111,16 @@ public fun String.androidId(): String {
     }
 }
 
+public fun String.exprToAndroidResourceValue():String{
+    val expr = this.trim();
+    val index = expr.indexOf('.')
+    if(index >=0){
+        return expr.substring(index+1)
+    }else{
+        return expr
+    }
+
+}
 public fun String.toCamelCase(): String {
     val split = this.split("_")
     if (split.size == 0) return ""

@@ -8,5 +8,5 @@ import com.databinding.tool.ext.stripNonJava
  */
 
 fun idToField(ids: String):String{
-    return ids.androidId().stripNonJava()
+    return ids.stripNonJava()
 }

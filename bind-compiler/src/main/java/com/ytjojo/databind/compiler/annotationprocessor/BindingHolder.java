@@ -81,12 +81,12 @@ public class BindingHolder {
                 continue;
             }
             ViewHolder viewHolder = new ViewHolder();
-            viewHolder.viewId = ExtKt.androidId(bindingTargetBundle.getId());
+            viewHolder.viewId = bindingTargetBundle.getId();
             viewHolder.viewFieldName = BindingUtilsKt.idToField(bindingTargetBundle.getId());
             viewHolder.viewTypeName = bindingTargetBundle.getFullClassName();
             viewHolder.bindingTargetBundle = bindingTargetBundle;
 
-            mViewsField.put(ExtKt.androidId(bindingTargetBundle.getId()), viewHolder);
+            mViewsField.put(bindingTargetBundle.getId(), viewHolder);
 
         }
     }
@@ -121,6 +121,12 @@ public class BindingHolder {
         }
         return list;
 
+    }
+    public void addBinding(Binding binding){
+        mAllBinding.add(binding);
+    }
+    public void addInverseBinding(InverseBinding inverseBinding){
+        mAllInversBinding.add(inverseBinding);
     }
 
     private List<FieldSpec> createVariables() {
@@ -261,6 +267,7 @@ public class BindingHolder {
     public void init(){
         mExprModel = new ExprModel(mModulePackage, true);
         mExpressionParser = new ExpressionParser(mExprModel);
+        mModulePackage = BindingProcesor.modulePackage;
         mBindingTargets = new ArrayList<BindingTarget>();
         HashSet<String> names = new HashSet<String>();
         for(Binding binding:mAllBinding){
@@ -269,11 +276,8 @@ public class BindingHolder {
                 names.add(identifierExpr.getName());
             }
         }
-        for(Map.Entry<String,ViewHolder> entry:mViewsField.entrySet()){
-            ViewHolder viewHolder = entry.getValue();
-
-
-
+        for (String javaLangClass : sJavaLangClasses) {
+            mExprModel.addImport(javaLangClass, "java.lang." + javaLangClass, null);
         }
 
         for (ResourceBundle.BindingTargetBundle targetBundle : layoutFileBundle.getBindingTargetBundles()) {
@@ -299,7 +303,34 @@ public class BindingHolder {
     }
 
     public BindingTarget createBindingTarget(ResourceBundle.BindingTargetBundle targetBundle) {
-        final BindingTarget target = new BindingTarget(targetBundle);
+        com.databinding.tool.store.ResourceBundle.BindingTargetBundle bundle =new com.databinding.tool.store.ResourceBundle.BindingTargetBundle();
+        bundle.mId = targetBundle.mId;
+        bundle.mViewName = targetBundle.mViewName;
+        bundle.mLocation= targetBundle.mLocation;
+        bundle.mIncludedLayout= targetBundle.mIncludedLayout;
+        for(ResourceBundle.BindingTargetBundle.BindingBundle item:targetBundle.mBindingBundleList){
+            bundle.addBinding(item.getName(),item.getExpr(),item.isTwoWay(),item.getLocation(),item.getValueLocation());
+        }
+        for(Binding binding:mAllBinding){
+            if(binding.fieldHolder != null){
+                if(binding.viewIds.contains(targetBundle.getId())){
+                    bundle.addBinding(binding.bindingKey,binding.fieldHolder.fieldName,false,new Location(),new Location());
+                }
+
+            }else if(binding.methodHolder!=null){
+                if(binding.viewIds.contains(targetBundle.getId())){
+                    bundle.addBinding(binding.bindingKey,binding.methodHolder.methodName,false,new Location(),new Location());
+                }
+            }
+        }
+
+        for(InverseBinding binding:mAllInversBinding){
+            if(binding.viewId.equals(targetBundle.getId())){
+                bundle.addBinding(binding.bindingKey,binding.fieldHolder.fieldName,true,new Location(),new Location());
+            }
+        }
+
+        final BindingTarget target = new BindingTarget(bundle);
         mBindingTargets.add(target);
         target.setModel(mExprModel);
         return target;

@@ -19,6 +19,7 @@ import com.databinding.tool.processing.ScopedException;
 import com.databinding.tool.processing.scopes.FileScopeProvider;
 import com.databinding.tool.processing.scopes.LocationScopeProvider;
 import com.databinding.tool.store.Location;
+import com.databinding.tool.util.ExtKt;
 import com.databinding.tool.util.L;
 import com.databinding.tool.util.ParserHelper;
 
@@ -546,7 +547,7 @@ public class ResourceBundle implements Serializable {
 
         public BindingTargetBundle(String id, String viewName, boolean used,Location location
         ) {
-            mId = id;
+            mId = id ==null? null: ExtKt.androidId(id);
             mViewName = viewName;
             mUsed = used;
             mLocation = location;
